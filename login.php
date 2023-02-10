@@ -67,7 +67,7 @@
                 <div class="input-boxes">
                     <div class="input-box">
                         <img src="images/user.png" id="user-png">
-                        <input type="text" placeholder="Enter your username" required>
+                        <input type="text" placeholder="Enter your username" name="username" required>
                     </div>
                     <div class="input-box">
                         <img src="images/portfolio.png" id="job-png">
@@ -80,7 +80,7 @@
                     </div>
                     <div class="input-box">
                         <img src="images/padlock.png" id="password-png">
-                        <input type="password" placeholder="Enter your passsword" required>
+                        <input type="password" placeholder="Enter your passsword" name="password" required>
                     </div>
                     <div class="text"><a href="#">Forgot password?</a></div>
                     <div class="button input-box">
