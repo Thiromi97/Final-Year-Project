@@ -1,0 +1,124 @@
+ *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+ }
+
+ #user-png{
+    height: 20px;
+    width: 20px; 
+ }
+
+ #job-png{
+    height: 20px;
+    width: 20px;
+ }
+
+ #password-png{
+    height: 20px;
+    width: 20px;
+ }
+
+ body{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #7d2ae8;
+    padding: 30px;
+ }
+
+ .container{
+    max-width: 850px;
+    width: 100%;
+    background: #fff;
+    padding: 40px 30px;
+    box-shadow:0 5px 10px rgba(0,0,0,0.2);
+
+ }
+
+ .container .form-content{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+
+ }
+
+ .container .form{
+   height: 100%;
+   width: 100%;
+   background: #fff;
+ }
+
+.login-form{
+   width: calc(100% / 2 - 25px);
+   /* background: red; */
+}
+
+.title{
+   position: relative;
+   font-size: 24px;
+   font-weight: 500;
+   color: #333;
+}
+
+.title:before{
+   content: '';
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   height: 3px;
+   width: 25px;
+   background: #7d2ae8;
+}
+
+.input-boxes{
+   margin-top: 30px;
+}
+
+.input-box{
+   display: flex;
+   align-items: center;
+   height: 50px;
+   width: 100%;
+   margin: 10px 0;
+   position: relative;
+}
+
+.input-box input{
+   height: 100%;
+   width: 100%;
+   outline: none;
+   border: none;
+   padding: 0 30px;
+   font-size: 17px;
+   font-weight: 500;
+   border-bottom: 2px solid rgba(0,0,0,0.2);
+   transition: all 0.3s ease;
+}
+
+.input-box input:focus,.input-box input:valid{
+   border-color: #7d2ae8;
+
+}
+
+.input-box select:focus{
+   border-color: #7d2ae8;
+
+}
+
+.input-box select{
+   height: 100%;
+   width: 100%;
+   outline: none;
+   border: none;
+   padding: 0 30px;
+   font-size: 17px;
+   font-weight: 500;
+   border-bottom: 2px solid rgba(0,0,0,0.2);
+
+}
+img{
+   position: absolute;
+}
