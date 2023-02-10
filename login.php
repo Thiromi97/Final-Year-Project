@@ -34,7 +34,7 @@
                     </div>
                     <div class="text"><a href="#">Forgot password?</a></div>
                     <div class="button input-box">
-                        <!-- <img src="images/padlock.png" id="password-png"> -->
+                        <img src="images/padlock.png" id="password-png">
                         <input type="submit" value="Submit">
                     </div>
                 </div>
