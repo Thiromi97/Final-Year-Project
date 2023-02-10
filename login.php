@@ -11,6 +11,7 @@
 
 <body>
     <div class="container">
+        <div class="cover"></div>
         <form action="#">
             <div class="login-form">
                 <div class="title">Login</div>
@@ -34,8 +35,8 @@
                     </div>
                     <div class="text"><a href="#">Forgot password?</a></div>
                     <div class="button input-box">
-                        <img src="images/padlock.png" id="password-png">
-                        <input type="submit" value="Submit">
+                        <!-- <img src="images/padlock.png" id="password-png"> -->
+                        <input type="submit" value="Submit" class="button">
                     </div>
                 </div>
             </div>
