@@ -41,8 +41,6 @@
     }
   }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,7 +59,7 @@
                 <img src="images/construction.jpg">
             </div>
         </div>
-        <form action="login.php" method="post">
+        <form action="" method="post">
             <div class="login-form">
                 <div class="title">Login</div>
                 <div class="input-boxes">
@@ -95,3 +93,5 @@
 </body>
 
 </html>
+
+
