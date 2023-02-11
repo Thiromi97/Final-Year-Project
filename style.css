@@ -1,159 +1,178 @@
- *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins",sans-serif;
- }
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: "Poppins",sans-serif;
+}
 
- #user-png{
-    height: 20px;
-    width: 20px; 
- }
+#user-png{
+   height: 20px;
+   width: 20px; 
+}
 
- #job-png{
-    height: 20px;
-    width: 20px;
- }
+#job-png{
+   height: 20px;
+   width: 20px;
+}
 
- #password-png{
-    height: 20px;
-    width: 20px;
- }
+#password-png{
+   height: 20px;
+   width: 20px;
+}
 
- body{
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #7d2ae8;
-    padding: 30px;
- }
-
- .container{
-   position: relative;
-    max-width: 850px;
-    width: 100%;
-    background: #fff;
-    padding: 40px 30px;
-    box-shadow:0 5px 10px rgba(0,0,0,0.2);
-
- }
-
- .container .cover{
-   position: absolute;
-   height: 100%;
-   width: 50%;
-   top: 0;
-   left: 50%;
-   background: red;
-   z-index: 98;
-   /* background: #7d2ae8; */
- }
-
- .container .form-content{
+body{
+   min-height: 100vh;
    display: flex;
    align-items: center;
-   justify-content: space-between;
+   justify-content: center;
+   background: #7d2ae8;
+   padding: 30px;
+}
 
- }
-
- .container .form{
-   height: 100%;
+.container{
+  position: relative;
+   max-width: 850px;
    width: 100%;
    background: #fff;
- }
+   padding: 40px 30px;
+   box-shadow:0 5px 10px rgba(0,0,0,0.2);
+
+}
+
+.container .cover{
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  top: 0;
+  left: 50%;
+  background: red;
+  z-index: 98;
+  /* background: #7d2ae8; */
+}
+
+.container .cover img{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: 12;
+  /* backface-visibility: hidden; */
+}
+
+.container .cover::before{
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #7d2ae8;
+  opacity: 0.5;
+  /* z-index: 100; */
+}
+
+.container .form-content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.container .form{
+  height: 100%;
+  width: 100%;
+  background: #fff;
+}
 
 .login-form{
-   width: calc(100% / 2 - 25px);
-   /* background: red; */
+  width: calc(100% / 2 - 25px);
+  /* background: red; */
 }
 
 .title{
-   position: relative;
-   font-size: 24px;
-   font-weight: 500;
-   color: #333;
+  position: relative;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
 }
 
 .title:before{
-   content: '';
-   position: absolute;
-   left: 0;
-   bottom: 0;
-   height: 3px;
-   width: 25px;
-   background: #7d2ae8;
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 25px;
+  background: #7d2ae8;
 }
 
 .input-boxes{
-   margin-top: 30px;
+  margin-top: 30px;
 }
 
 .input-box{
-   display: flex;
-   align-items: center;
-   height: 50px;
-   width: 100%;
-   margin: 10px 0;
-   position: relative;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  margin: 10px 0;
+  position: relative;
 }
 
 .input-box input{
-   height: 100%;
-   width: 100%;
-   outline: none;
-   border: none;
-   padding: 0 30px;
-   font-size: 17px;
-   font-weight: 500;
-   border-bottom: 2px solid rgba(0,0,0,0.2);
-   transition: all 0.3s ease;
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  padding: 0 30px;
+  font-size: 17px;
+  font-weight: 500;
+  border-bottom: 2px solid rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
 }
 
 .input-box input:focus,.input-box input:valid{
-   border-color: #7d2ae8;
+  border-color: #7d2ae8;
 
 }
 
 .input-box select:focus{
-   border-color: #7d2ae8;
+  border-color: #7d2ae8;
 
 }
 
 .input-box select{
-   height: 100%;
-   width: 100%;
-   outline: none;
-   border: none;
-   padding: 0 30px;
-   font-size: 17px;
-   font-weight: 500;
-   border-bottom: 2px solid rgba(0,0,0,0.2);
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  padding: 0 30px;
+  font-size: 17px;
+  font-weight: 500;
+  border-bottom: 2px solid rgba(0,0,0,0.2);
 
 }
 
 img{
-   position: absolute;
+  position: absolute;
 }
 
 .button{
-   color: #fff;
-   background: #7d2ae8;
-   border-radius: 6px;
-   padding: 0;
-   margin-top: 40px;
-   cursor: pointer;
-   transition: all 0.4s ease;
+  color: #fff;
+  background: #7d2ae8;
+  border-radius: 6px;
+  padding: 0;
+  margin-top: 40px;
+  cursor: pointer;
+  transition: all 0.4s ease;
 }
 
 .button:hover{
-   background: #333;
+  background: #333;
 } 
 
 .text a{
-   text-decoration: none;
+  text-decoration: none;
 }
 
 .text a:hover{
-   text-decoration: underline;
+  text-decoration: underline;
 }
