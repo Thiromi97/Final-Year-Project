@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
   $username = $_POST['username'];
   $password = $_POST['password'];
   $role = $_POST['role'];
-  $query = "SELECT * FROM login_details WHERE username = '$username' AND password = '$password'";
+  $query = "SELECT * FROM login_details WHERE username = '$username' AND password = '$password' AND role = '$role'";
   $result = mysqli_query($conn, $query);
   // If the user exists in the database
   if (mysqli_num_rows($result) == 1) {
