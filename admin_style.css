@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -14,6 +15,19 @@ body{
 .sidebar{
     position: fixed;
     height: 100%;
+    width: 240px;
+    background: blue;
+}
+
+.sidebar .logo-details{
+    height: 80px;
+    width: 100%;
+}
+
+.sidebar .logo-details i{
+    font-size: 28px;
+    font-weight: 500;
+    color: white;
 }
 
 ul{
