@@ -17,6 +17,11 @@ body{
     height: 100%;
     width: 240px;
     background: blue;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active{
+    width: 60px;
 }
 
 .sidebar .logo-details{
@@ -39,7 +44,7 @@ body{
     font-size: 24px;
     font-weight: 500;
     color:white;
-    margin-left: 8px;
+    
 }
 
 .sidebar .nav-links{
@@ -53,13 +58,142 @@ body{
 }
 
 .sidebar .nav-links li a{
-    background: red;
+    /* background: red; */
     height: 100%;
     width: 100%;
-    display: flex;
+    display: flex; 
     align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+}
+
+.sidebar .nav-links li a:hover{
+    background: lightblue;
+}
+
+.sidebar .nav-links li a i{
+    /* background: red; */
+    min-width: 60px;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+}
+
+.sidebar .nav-links li a .link_name{
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+
 }
 
 ul{
     list-style-type: none;
 }
+
+/* Home-section CSS */
+
+.home-section{
+    background: grey;
+    position: relative;
+    min-height: 100vh;
+    width: calc(100% - 240px);
+    left: 240px;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active ~ .home-section{
+    width: calc(100% - 60px);
+    left: 60px;
+}
+
+.home-section nav{
+    height: 80px;
+    background: white;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.home-section nav .sidebar-button{
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.home-section nav .sidebar-button i{
+    font-size: 35px;
+    margin-right: 10px;
+
+}
+
+.home-section nav .search-box{
+    height: 50px;
+    width: 550px;
+    margin: 0 20px;
+    position: relative;
+}
+
+nav .search-box input{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    padding: 0 15px;
+    font-size: 17px;
+    color: white;
+    background: gray;
+    border: 2px solid brown;
+    outline: none;
+
+}
+
+nav .search-box .bx-search{
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 40px;
+    width: 40px;
+    background: blue;
+    border-radius: 6px;
+    color: white;
+    font-size: 22px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.home-section nav .profile-details{
+    display: flex;
+    align-items: center;
+    height: 50px;
+    min-width: 190px;
+    background: grey;
+    border: 2px solid blue;
+    border-radius: 6px;
+    padding: 0 15px 0 2px;
+}
+
+nav .profile-details img{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+nav .profile-details .admin_name{
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    margin: 0 10px;
+    white-space: nowrap;
+
+}
+
+nav .profile-details i{
+    color: #333;
+    font-size: 25px;
+}
+
