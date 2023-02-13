@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="admin_style.css">
+  <link rel="stylesheet" href="scaffolding_style.css">
   <!-- Boxicons CDN Link -->
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,15 +23,15 @@
         </a>
       </li>
       <li>
-        <a href="admin_scaffolding.php">
+        <a href="#">
           <i class='bx bx-outline'></i>
-          <span class="links_name">Scaffolding</span>
+          <span class="links_name">Inventory</span>
         </a>
       </li>
       <li>
         <a href="#">
           <i class='bx bx-cuboid'></i>
-          <span class="links_name">Reinforcement</span>
+          <span class="links_name">Issued Products</span>
         </a>
       </li>
       <li>
@@ -72,7 +72,7 @@
     </nav>
 
     <div class="home-content">
-      <div class="overview-boxes">
+      <!-- <div class="overview-boxes">
         <div class="box">
           <div class="right-side">
             <div class="box-topic">Total Order</div>
@@ -117,7 +117,7 @@
           </div>
           <i class='bx bx-box cart four'></i>
         </div>
-      </div>
+      </div> -->
 
       <div class="sales-boxes">
         <div class="recent-sales box">
@@ -176,71 +176,63 @@
             <a href="#">See All</a>
           </div>
         </div>
-        <div class="top-sales box">
+        <!-- <div class="top-sales box">
           <div class="title">Top Seling Product</div>
           <ul class="top-sales-details">
             <li>
               <a href="#">
-                <!--<img src="images/sunglasses.jpg" alt="">-->
                 <span class="product">Vuitton Sunglasses</span>
               </a>
               <span class="price">$1107</span>
             </li>
             <li>
               <a href="#">
-                <!--<img src="images/jeans.jpg" alt="">-->
                 <span class="product">Hourglass Jeans </span>
               </a>
               <span class="price">$1567</span>
             </li>
             <li>
               <a href="#">
-                <!-- <img src="images/nike.jpg" alt="">-->
                 <span class="product">Nike Sport Shoe</span>
               </a>
               <span class="price">$1234</span>
             </li>
             <li>
               <a href="#">
-                <!--<img src="images/scarves.jpg" alt="">-->
                 <span class="product">Hermes Silk Scarves.</span>
               </a>
               <span class="price">$2312</span>
             </li>
             <li>
               <a href="#">
-                <!--<img src="images/blueBag.jpg" alt="">-->
                 <span class="product">Succi Ladies Bag</span>
               </a>
               <span class="price">$1456</span>
             </li>
             <li>
               <a href="#">
-                <!--<img src="images/bag.jpg" alt="">-->
                 <span class="product">Gucci Womens's Bags</span>
               </a>
               <span class="price">$2345</span>
             <li>
               <a href="#">
-                <!--<img src="images/addidas.jpg" alt="">-->
                 <span class="product">Addidas Running Shoe</span>
               </a>
               <span class="price">$2345</span>
             </li>
             <li>
               <a href="#">
-                <!--<img src="images/shirt.jpg" alt="">-->
                 <span class="product">Bilack Wear's Shirt</span>
               </a>
               <span class="price">$1245</span>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
   </section>
 
-  <script src="script.js"> </script>
+  <script src="script.js"></script>
 
 </body>
 
