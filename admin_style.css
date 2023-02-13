@@ -108,12 +108,22 @@ ul{
 }
 
 .home-section nav{
+    position: fixed;
+    width: calc(100% - 240px);
+    left: 240px;
     height: 80px;
     background: white;
     padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: all 0.5s ease;
+}
+
+.sidebar.active ~ .home-section nav{
+    width: calc(100% - 60px);
+    left: 60px;
+
 }
 
 .home-section nav .sidebar-button{
@@ -197,3 +207,109 @@ nav .profile-details i{
     font-size: 25px;
 }
 
+.home-section .home-content{
+    position: relative;
+    padding-top:100px ;
+
+}
+
+.home-content .overview-boxes .box{
+    width: calc(100% / 4 - 15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 14px; 
+    background:#fff;
+    border-radius: 12px;
+
+}
+
+.home-content .overview-boxes{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.home-content .overview-boxes .number{
+    font-size: 35px;
+    font-weight: 500;
+    margin-top: -5px;
+    display: inline-block;
+}
+
+.overview-boxes .indicator{
+    display: flex;
+    align-items: center;
+}
+
+.overview-boxes .indicator i{
+    height: 20px;
+    width: 20px;
+    background: #8FDACB;
+    color: #fff ;
+    border-radius: 50%;
+    font-size: 20px;
+    margin-right: 5px;
+
+}
+
+.overview-boxes .indicator .text{
+    font-size: 12px;
+}
+
+.overview-boxes .box .cart{
+    font-size: 32px;
+    font-weight: 500;
+    height: 50px;
+    width: 50px;
+    background: #cce5ff;
+    color: #66b0ff;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.overview-boxes .box .cart.two{
+    background: #2BD47D;
+    color: #C0F2D8;
+}
+
+.overview-boxes .box .cart.three{
+    color: #ffc233;
+    background:#ffe8b3 ;
+}
+
+.overview-boxes .box .cart.four{
+    color: #e05260;
+    background: #f7d4d7;
+}
+
+@media (max-width: 1216px) {
+    .sidebar{
+        width: 60px;
+    }
+
+    .sidebar.active{
+        width: 240px;
+    }
+
+    .home-section{
+        width: calc(100% - 60px);
+        left: 60px;
+    }
+
+    .sidebar.active ~ .home-section{
+        width: calc(100% - 220px);
+        left: 40px;
+    }
+
+    .home-section nav{
+        width: calc(100% - 60px);
+        left: 60px;
+       
+    }
+    
+}

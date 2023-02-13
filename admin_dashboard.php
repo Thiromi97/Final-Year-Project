@@ -81,12 +81,50 @@
                 <div class="box">
                     <div class="left-side">
                         <div class="box_topic">Order List</div>
+                        <div class="number">40,876</div>
+                        <div class="indicator">
+                        <span class="text">Today</span>   
+                        </div>
                     </div>
+                    <i class='bx bx-cart-download cart'></i>
                 </div>
-            </div>
+                <div class="box">
+                    <div class="left-side">
+                        <div class="box_topic">Total Sales</div>
+                        <div class="number">38,876</div>
+                        <div class="indicator">
+                        <span class="text">Today</span>   
+                        </div>
+                    </div>
+                    <i class='bx bxs-cart-add cart two'></i>
+                </div>
+                <div class="box">
+                    <div class="left-side">
+                        <div class="box_topic">Total Profit</div>
+                        <div class="number">12,876</div>
+                        <div class="indicator">
+                        <span class="text">Today</span>   
+                        </div>
+                    </div>
+                    <i class='bx bx-dollar-circle cart three'></i>
+                </div>
+                <div class="box">
+                    <div class="left-side">
+                        <div class="box_topic">Total Profit</div>
+                        <div class="number">12,876</div>
+                        <div class="indicator">
+                        <span class="text">Today</span>   
+                        </div>
+                    </div>
+                    <i class='bx bx-dollar-circle cart four'></i>
+                </div>
+            </div> 
+
+<!--sales content-->
+
         </div>
     </section>
-    <!-- <script src="script.js"></script> -->
+    <script src="script.js"></script>
 
 </body>
 
