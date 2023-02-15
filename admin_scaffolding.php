@@ -8,6 +8,8 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
 
 <body>
   <div class="sidebar">
@@ -23,7 +25,7 @@
         </a>
       </li>
       <li>
-        <a href="#">
+        <a href="scaffolding_inventory.php">
           <i class='bx bx-outline'></i>
           <span class="links_name">Inventory</span>
         </a>
@@ -72,7 +74,7 @@
     </nav>
 
     <div class="home-content">
-      <!-- <div class="overview-boxes">
+      <div class="overview-boxes">
         <div class="box">
           <div class="right-side">
             <div class="box-topic">Total Order</div>
@@ -117,11 +119,12 @@
           </div>
           <i class='bx bx-box cart four'></i>
         </div>
-      </div> -->
+      </div>
 
       <div class="sales-boxes">
         <div class="recent-sales box">
-          <div class="title">Recent Sales</div>
+        <canvas id="barchart" width="400px" height="400px"></canvas>
+          <!-- <div class="title">Recent Sales</div>
           <div class="sales-details">
             <ul class="details">
               <li class="topic">Date</li>
@@ -171,13 +174,14 @@
               <li><a href="#">$23.53</a></li>
               <li><a href="#">$46.52</a></li>
             </ul>
-          </div>
+          </div> -->
           <div class="button">
             <a href="#">See All</a>
           </div>
         </div>
-        <!-- <div class="top-sales box">
-          <div class="title">Top Seling Product</div>
+        <div class="top-sales box">
+        <canvas id="piechart" width="200px" height="200px"></canvas>
+          <!-- <div class="title">Top Seling Product</div>
           <ul class="top-sales-details">
             <li>
               <a href="#">
@@ -227,12 +231,15 @@
               <span class="price">$1245</span>
             </li>
           </ul>
-        </div> -->
-      </div>
+        </div>
+      </div> -->
     </div>
   </section>
-
-  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+   <script src="chart1.js"></script>
+   <script src="chart2.js"></script>
+   <script src="script.js"></script>
+   
 
 </body>
 
