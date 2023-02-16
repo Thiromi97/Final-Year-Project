@@ -9,7 +9,8 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
-$result = mysqli_query($conn, "SELECT item, name, rate, extra, marketValue, fullStock, MMStock FROM inventory");
+$sql = "SELECT * FROM inventory";
+$result = mysqli_query($conn, $sql);
 ?>
 
 
@@ -23,7 +24,6 @@ $result = mysqli_query($conn, "SELECT item, name, rate, extra, marketValue, full
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 
 <body>
   <div class="sidebar">
@@ -86,67 +86,53 @@ $result = mysqli_query($conn, "SELECT item, name, rate, extra, marketValue, full
         <i class='bx bx-chevron-down'></i>
       </div>
     </nav>
-
     <div class="home-content">
       <div class="sales-boxes">
         <div class="recent-sales box">
           <div class="button">
             <a href="#">+ Add New</a>
           </div>
-          <!-- <canvas id="barchart" width="400px" height="400px"></canvas> -->
           <div class="title">Inventory</div>
+          <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <i class='bx bx-search'></i>
+      </div>
           <div class="sales-details">
-            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-              <ul class="details">
-                <li class="topic">Item</li>
-                <?php echo '<li>' . $row['item'] . '</li>'; ?>
-              </ul>
-              <ul class="details">
-                <li class="topic">Name</li>
-                <?php echo '<li>' . $row['name'] . '</li>'; ?>
-              </ul>
-              <ul class="details">
-                <li class="topic">Rate</li>
-                <?php echo '<li>' . $row['rate'] . '</li>'; ?>
-              </ul>
-              <ul class="details">
-                <li class="topic">Extra</li>
-                <?php echo '<li>' . $row['extra'] . '</li>'; ?>
-              </ul>
-              <ul class="details">
-                <li class="topic">MarketValue</li>
-                <?php echo '<li>' . $row['marketValue'] . '</li>'; ?>
-              </ul>
-              <ul class="details">
-                <li class="topic">FullStock</li>
-                <?php echo '<li>' . $row['fullStock'] . '</li>';?>
-              </ul>
-              <ul class="details">
-                <li class="topic">MMStock</li>
-               <?php echo '<li>' . $row['MMStock'] . '</li>';?>
-              </ul>
-              <ul class="details">
-                <li class="topic"><i class='bx bx-cog'></i></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-                <li><a href="#"><i class='bx bx-dots-horizontal-rounded'></i></a></li>
-              </ul>
+            <table class="details">
+              <tr>
+                <th class="topic">Item</th>
+                <th class="topic">Name</th>
+                <th class="topic">Rate</th>
+                <th class="topic">Extra</th>
+                <th class="topic">Market Value</th>
+                <th class="topic">Full Stock</th>
+                <th class="topic">MMStock</th>
+                <th class="topic">Settings</th>
+              </tr>
+              <?php while ($row = mysqli_fetch_assoc($result)) {
+                echo "<tr> 
+                        <td>" . $row["item"] . "</td>
+                        <td>" . $row["name"] . "</td>
+                        <td>" . $row["rate"] . "</td>
+                        <td>" . $row["extra"] . "</td>
+                        <td>" . $row["marketValue"] . "</td>
+                        <td>" . $row["fullStock"] . "</td>
+                        <td>" . $row["MMStock"] . "</td>
+                        <td>
+                          <a href='#'><i class='bx bx-edit'></i></a>
+                          <a href='#'><i class='bx bx-trash'></i></a>
+                        </td>
+                        <td>
+                        </td>
+                      </tr>";
+              } ?>
+            </table>
           </div>
-        <?php } ?>
         </div>
       </div>
     </div>
   </section>
   <script src="script.js"></script>
-
-
 </body>
 
 </html>
