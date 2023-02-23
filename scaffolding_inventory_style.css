@@ -393,6 +393,27 @@ a {
   color: #e74c3c;
 }
 
+.home-content .search-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.home-content .search-box input[type="text"] {
+  width: 50%;
+  padding: 12px 20px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.home-content .search-box i.bx {
+  font-size: 22px;
+  color: #555;
+}
+
+
 
  /* Responsive Media Query */
  @media (max-width: 1240px) {
