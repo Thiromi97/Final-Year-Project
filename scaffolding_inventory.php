@@ -119,7 +119,6 @@ $result = mysqli_query($conn, $sql);
                         <td>" . $row["fullStock"] . "</td>
                         <td>" . $row["MMStock"] . "</td>
                         <td>
-                          <a href='#'><i class='bx bx-edit'></i></a>
                           <a href='#'><i class='bx bx-trash'></i></a>
                         </td>
                         <td>
