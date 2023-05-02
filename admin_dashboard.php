@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -8,6 +7,7 @@
     <link rel="stylesheet" href="assets/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fontawesome-all.min.css">
+    <script src="https://kit.fontawesome.com/961768b1ec.js" crossorigin="anonymous"></script>
 </head>
 
 <body id="page-top" style="--bs-primary: #574476;--bs-primary-rgb: 87,68,118;--bs-success: #1dc9b7;--bs-success-rgb: 29,201,183;--bs-danger: #FF0000;--bs-danger-rgb: 255,0,0;--bs-warning: #fd3995;--bs-warning-rgb: 253,57,149;--bs-secondary: #808080;--bs-info: #39a1f4;--bs-info-rgb: 57,161,244;--bs-light: #F5F5F5;--bs-light-rgb: 245,245,245;--bs-dark: #2E2E2E;--bs-dark-rgb: 46,46,46;--bs-secondary-rgb: 128,128,128;">
