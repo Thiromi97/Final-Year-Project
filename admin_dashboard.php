@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Brand</title>
+    <title>Dashboard - Admin</title>
     <link rel="stylesheet" href="assets/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <!-- <link rel="stylesheet" href="assets/fontawesome-all.min.css"> -->
@@ -21,7 +21,7 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-bars" style="font-size: 14px;"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="table.html"><i class="fas fa-table"></i><span>Scaffolding</span></a><a class="nav-link" href="table.html"><i class="fas fa-th" style="font-size: 13px;"></i><span>Reinforcement</span></a><a class="nav-link" href="table.html"><i class="fas fa-th-large"></i><span>Reinforcement Estimate</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin_scaffolding.php"><i class="fas fa-table"></i><span>Scaffolding</span></a><a class="nav-link" href="table.html"><i class="fas fa-th" style="font-size: 13px;"></i><span>Reinforcement</span></a><a class="nav-link" href="table.html"><i class="fas fa-th-large"></i><span>Reinforcement Estimate</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-sign-out-alt" style="font-size: 14px;"></i><span>LogOut</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="register.html"><i class="fas fa-cog"></i><span>&nbsp;Settings</span></a></li>
                 </ul>
