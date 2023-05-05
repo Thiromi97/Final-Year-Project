@@ -1,3 +1,23 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "scaffolding";
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+$rowsPerPage = 10;
+
+if (isset($_GET['rowsPerPage'])) {
+    $rowsPerPage = $_GET['rowsPerPage'];
+}
+$sql = "SELECT * FROM inventory LIMIT $rowsPerPage";
+$result = mysqli_query($conn, $sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -134,12 +154,15 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
+                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                        <label class="form-label">Show&nbsp;
+                                            <select class="d-inline-block form-select form-select-sm" onchange="location.href = '?rowsPerPage=' + this.value;">
+                                                <option value="10" <?php if ($rowsPerPage == 10) echo "selected"; ?>>10</option>
+                                                <option value="25" <?php if ($rowsPerPage == 25) echo "selected"; ?>>25</option>
+                                                <option value="50" <?php if ($rowsPerPage == 50) echo "selected"; ?>>50</option>
+                                                <option value="100" <?php if ($rowsPerPage == 100) echo "selected"; ?>>100</option>
+                                            </select>&nbsp;</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
@@ -156,110 +179,22 @@
                                             <th>Market Price</th>
                                             <th>Quantity</th>
                                             <th></th>
-                                            <th><a class="btn btn-primary btn-circle ms-1" role="button" href="untitled-1.html"><i class="fas fa-plus text-white" style="font-size: 17px;"></i></a></th>
+                                            <th><a id="add-item-btn" class="btn btn-primary btn-circle ms-1" role="button" href="item_add.php"><i class="fas fa-plus text-white" style="font-size: 17pbx;"></i></a></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>ZAA</td>
-                                            <td>scaffolding</td>
-                                            <td>Supplies</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>1000</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZAB</td>
-                                            <td>pipe</td>
-                                            <td>Tools</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>100</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZAC</td>
-                                            <td>scaffolding</td>
-                                            <td>Equipment</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>2000</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZAD</td>
-                                            <td>plate</td>
-                                            <td>Tools</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>4900</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZAE</td>
-                                            <td>jack</td>
-                                            <td>Supplies</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>1500</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZAF</td>
-                                            <td>nuts</td>
-                                            <td>Supplies</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>1000</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZAG</td>
-                                            <td>joints</td>
-                                            <td>Equipment</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>500</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZAH</td>
-                                            <td>scaffolding</td>
-                                            <td>Supplies</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>569</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZAJ</td>
-                                            <td>scaffolding</td>
-                                            <td>Supplies</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>2300</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td>ZAK</td>
-                                            <td>scaffolding</td>
-                                            <td>Supplies</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td>1000</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
+                                        <?php while ($row = mysqli_fetch_assoc($result)) {
+                                            echo "<tr> 
+                <td>" . $row["itemCode"] . "</td>
+                <td>" . $row["itemName"] . "</td>
+                <td>" . $row["category"] . "</td>
+                <td>" . $row["purchasePrice"] . "</td>
+                <td>" . $row["marketPrice"] . "</td>
+                <td>" . $row["quantity"] . "</td>
+                <td><a class='btn btn-danger btn-circle ms-1' role='button' style='background: #3ab795;border-color: #3ab795;'><i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i></a></td>
+                <td><a class='btn btn-danger btn-circle ms-1' role='button'><i class='fas fa-trash text-white' style='font-size: 17px;'></i></a></td>
+            </tr>";
+                                        } ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -304,5 +239,27 @@
     <script src="assets/bs-init1.js"></script>
     <script src="assets/theme1.js"></script>
 </body>
+
+<script>
+    // Get a reference to the button element
+    const addButton = document.getElementById('add-item-btn');
+
+    // Add a click event listener to the button
+    addButton.addEventListener('click', function(event) {
+        // Prevent the default behavior of the link
+        event.preventDefault();
+
+        // Calculate the position of the popup window
+        const width = 600;
+        const height = 400;
+        const left = (screen.width / 2) - (width / 2);
+        const top = (screen.height / 2) - (height / 2);
+
+        // Open the popup window
+        window.open('item_add.php', 'Popup Window', `width=${width},height=${height},left=${left},top=${top}`);
+    });
+</script>
+
+
 
 </html>
