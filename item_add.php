@@ -1,3 +1,17 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "scaffolding";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,20 +31,48 @@
                     <div class="card mb-5">
                         <div class="card-body p-sm-5">
                             <h2 class="text-center mb-4">New Item</h2>
-                            <form method="post">
-                                <div class="mb-3"><label class="form-label">Item Code</label><input class="form-control" type="text" id="name-2" name="ItemCode" placeholder="ZA" minlength="3" maxlength="3" required="" value="ZA"></div>
-                                <div class="mb-3"><label class="form-label">Item Name</label><input class="form-control" type="text" id="name-3" name="ItemName" maxlength="200" required="" placeholder="ItemName"></div>
+                            <form method="post" action="">
+                                <div class="mb-3"><label class="form-label">Item Code</label><input class="form-control" type="text" id="name-2" name="itemCode" placeholder="Z" minlength="3" maxlength="3" required=""></div>
+                                <div class="mb-3"><label class="form-label">Item Name</label><input class="form-control" type="text" id="name-3" name="itemName" maxlength="200" required="" placeholder="ItemName"></div>
                                 <div class="mb-3"></div>
-                                <div class="mb-3"><label class="form-label">Category</label><select class="form-select" name="Category" required="" value="Category">
+                                <div class="mb-3"><label class="form-label">Category</label><select class="form-select" name="category" required="" value="Category">
                                         <option value="Supplies">Supplies</option>
                                         <option value="Tools">Tools</option>
                                         <option value="Equipment">Equipment</option>
                                     </select></div>
-                                <div class="mb-3"><label class="form-label">Purchased Price</label><input class="form-control" type="number" name="PurchasedPrice" max="100" placeholder="$" required=""></div>
-                                <div class="mb-3"><label class="form-label">Market Price</label><input class="form-control" type="number" name="MarketPrice" max="100" placeholder="$" required=""></div>
-                                <div class="mb-3"><label class="form-label">Quantity</label><input class="form-control" type="number" name="Quantity" max="100" required="" placeholder="Quantity"></div>
+                                <div class="mb-3"><label class="form-label">Purchased Price</label><input class="form-control" type="number" name="purchasePrice"  placeholder="$" required=""></div>
+                                <div class="mb-3"><label class="form-label">Market Price</label><input class="form-control" type="number" name="marketPrice"  placeholder="$" required=""></div>
+                                <div class="mb-3"><label class="form-label">Quantity</label><input class="form-control" type="number" name="quantity"  required="" placeholder="Quantity"></div>
                                 <div><button class="btn btn-primary d-block w-100" type="submit">Save</button></div>
                             </form>
+                            <?php 
+                            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                // Escape user inputs for security
+                                $ItemCode = mysqli_real_escape_string($conn, $_POST['itemCode']);
+                                $ItemName = mysqli_real_escape_string($conn, $_POST['itemName']);
+                                $Category = mysqli_real_escape_string($conn, $_POST['category']);
+                                $PurchasePrice = mysqli_real_escape_string($conn, $_POST['purchasePrice']);
+                                $MarketPrice = mysqli_real_escape_string($conn, $_POST['marketPrice']);
+                                $Quantity = mysqli_real_escape_string($conn, $_POST['quantity']);
+                                
+                                // Attempt insert query execution
+                                $sql = "SELECT itemCode FROM inventory WHERE itemCode = '$ItemCode'";
+                                $result = mysqli_query($conn, $sql);
+                                if (mysqli_num_rows($result) > 0) {
+                                    // If the itemCode already exists, show an error message
+                                    echo "ERROR: Item with code $ItemCode already exists.";
+                                } else {
+                                    // If the itemCode doesn't exist, attempt insert query execution
+                                    $sql = "INSERT INTO inventory (itemCode, itemName, category, purchasePrice, marketPrice, quantity) VALUES ('$ItemCode', '$ItemName', '$Category', '$PurchasePrice', '$MarketPrice', '$Quantity')";
+                                    if(mysqli_query($conn, $sql)){
+                                        echo "Records added successfully.";
+                                    } else{
+                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                                    }
+                                }                      
+                                mysqli_close($conn);
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>

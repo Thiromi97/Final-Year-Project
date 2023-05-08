@@ -191,8 +191,16 @@ $result = mysqli_query($conn, $sql);
                 <td>" . $row["purchasePrice"] . "</td>
                 <td>" . $row["marketPrice"] . "</td>
                 <td>" . $row["quantity"] . "</td>
-                <td><a class='btn btn-danger btn-circle ms-1' role='button' style='background: #3ab795;border-color: #3ab795;'><i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i></a></td>
-                <td><a class='btn btn-danger btn-circle ms-1' role='button'><i class='fas fa-trash text-white' style='font-size: 17px;'></i></a></td>
+                <td>
+                <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code='" . $row["itemCode"] . "' role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
+        <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
+    </button>
+</td>
+<td>
+<button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["itemCode"] . "'>
+    <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
+</button>
+</td>
             </tr>";
                                         } ?>
                                     </tbody>
@@ -260,6 +268,53 @@ $result = mysqli_query($conn, $sql);
     });
 </script>
 
+<script>
+    // Get a reference to all the edit buttons
+    const editButtons = document.querySelectorAll('.edit-item-btn');
 
+    // Add a click event listener to each edit button
+    editButtons.forEach(function(editButton) {
+        editButton.addEventListener('click', function(event) {
+            // Prevent the default behavior of the link
+            event.preventDefault();
+
+            // Get the itemCode of the item that needs to be edited
+            const itemCode = editButton.getAttribute('data-item-code');
+
+            // Calculate the position of the popup window
+            const width = 600;
+            const height = 400;
+            const left = (screen.width / 2) - (width / 2);
+            const top = (screen.height / 2) - (height / 2);
+
+            // Open the popup window with the item_edit.php page and pass the itemCode in the URL
+            window.open(`item_edit.php?itemCode=${itemCode}`, 'Popup Window', `width=${width},height=${height},left=${left},top=${top}`);
+        });
+    });
+</script>
+
+<script>
+    // Get a reference to all the delete buttons
+    const deleteButtons = document.querySelectorAll('.delete-item-btn');
+
+    // Add a click event listener to each delete button
+    deleteButtons.forEach(function(deleteButton) {
+        deleteButton.addEventListener('click', function(event) {
+            // Prevent the default behavior of the button
+            event.preventDefault();
+
+            // Get the itemCode of the item that needs to be deleted
+            const itemCode = deleteButton.getAttribute('data-item-code');
+
+            // Show a confirmation dialog box
+            const confirmed = confirm('Are you sure you want to delete this record?');
+
+            // If the user clicked "OK", delete the record
+            if (confirmed) {
+                window.location.href = `item_delete.php?itemCode=${itemCode}`;
+            }
+        });
+    });
+</script>
 
 </html>
