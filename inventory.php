@@ -10,12 +10,21 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 $rowsPerPage = 10;
+$page = 1;
 
 if (isset($_GET['rowsPerPage'])) {
     $rowsPerPage = $_GET['rowsPerPage'];
 }
-$sql = "SELECT * FROM inventory LIMIT $rowsPerPage";
+
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
+
+$offset = ($page - 1) * $rowsPerPage;
+
+$sql = "SELECT * FROM inventory LIMIT $rowsPerPage OFFSET $offset";
 $result = mysqli_query($conn, $sql);
+
 ?>
 
 <!DOCTYPE html>
@@ -161,11 +170,19 @@ $result = mysqli_query($conn, $sql);
                                                 <option value="25" <?php if ($rowsPerPage == 25) echo "selected"; ?>>25</option>
                                                 <option value="50" <?php if ($rowsPerPage == 50) echo "selected"; ?>>50</option>
                                                 <option value="100" <?php if ($rowsPerPage == 100) echo "selected"; ?>>100</option>
-                                            </select>&nbsp;</label>
+                                            </select>&nbsp;
+                                        </label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                        <form method="POST" action="">
+                                        <label class="form-label">
+                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search ItemCode" name="search">
+                                        </label>
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -223,12 +240,28 @@ $result = mysqli_query($conn, $sql);
                                 <div class="col-md-6">
                                     <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                         <ul class="pagination">
-                                            <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
-                                        </ul>
+                                            <?php
+                                            // Get the total number of records
+                                            $sql = "SELECT COUNT(*) AS count FROM inventory";
+                                            $result_count = mysqli_query($conn, $sql);
+                                            $row_count = mysqli_fetch_assoc($result_count);
+                                            $totalRecords = $row_count['count'];
+
+                                            // Calculate the total number of pages
+                                            $totalPages = ceil($totalRecords / $rowsPerPage);
+
+                                            $prevDisabled = ($page == 1) ? "disabled" : "";
+                                            $nextDisabled = ($page == $totalPages) ? "disabled" : "";
+                                            echo '<li class="page-item ' . $prevDisabled . '"><a class="page-link" aria-label="Previous" href="?rowsPerPage=' . $rowsPerPage . '&page=' . ($page - 1) . '"><span aria-hidden="true">«</span></a></li>';
+                                            // Generate pagination links
+                                            for ($i = 1; $i <= $totalPages; $i++) {
+                                                $activeClass = ($page == $i) ? "active" : "";
+                                                echo '<li class="page-item ' . $activeClass . '"><a class="page-link" href="?rowsPerPage=' . $rowsPerPage . '&page=' . $i . '">' . $i . '</a></li>';
+                                            }
+                                            echo '<li class="page-item ' . $nextDisabled . '"><a class="page-link" aria-label="Next" href="?rowsPerPage=' . $rowsPerPage . '&page=' . ($page + 1) . '"><span aria-hidden="true">»</span></a></li>';
+
+                                            ?>
+
                                     </nav>
                                 </div>
                             </div>
