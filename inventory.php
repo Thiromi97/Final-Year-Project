@@ -178,7 +178,7 @@ $result = mysqli_query($conn, $sql);
                                     <div class="text-md-end dataTables_filter" id="dataTable_filter">
                                         <form method="GET" action="item_search.php">
                                         <label class="form-label">
-                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search ItemCode" name="itemCode">
+                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="ItemCode" name="itemCode">
                                         </label>
                                         <button type="submit" class="btn btn-primary btn-sm">Search</button>
                                         </form>

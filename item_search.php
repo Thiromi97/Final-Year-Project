@@ -16,8 +16,19 @@ if (isset($_GET['itemCode'])) {
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
+        $itemCode = $row['itemCode'];
+        $itemName = $row['itemName'];
+        $category = $row['category'];
+        $purchasePrice = $row['purchasePrice'];
+        $marketPrice = $row['marketPrice'];
+        $quantity = $row['quantity'];
     } else {
-        echo "No results found.";
+        $itemCode = 'No data found';
+        $itemName = 'No data found';
+        $category = 'No data found';
+        $purchasePrice = 'No data found';
+        $marketPrice = 'No data found';
+        $quantity = 'No data found';
     }
 } else {
     header("Location: inventory.php");
@@ -174,12 +185,12 @@ if (isset($_GET['itemCode'])) {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><?php echo $row['itemCode']; ?></td>
-                                            <td><?php echo $row['itemName']; ?></td>
-                                            <td><?php echo $row['category']; ?></td>
-                                            <td><?php echo $row['purchasePrice']; ?></td>
-                                            <td><?php echo $row['marketPrice']; ?></td>
-                                            <td><?php echo $row['quantity']; ?></td>
+                                            <td><?php echo $itemCode; ?></td>
+                                            <td><?php echo $itemName;?></td>
+                                            <td><?php echo $category; ?></td>
+                                            <td><?php echo $purchasePrice; ?></td>
+                                            <td><?php echo $marketPrice; ?></td>
+                                            <td><?php echo $quantity; ?></td>
                                             <td>
                                                 <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code="<?php echo $row['itemCode']; ?>"  role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
                                                     <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
