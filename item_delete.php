@@ -48,6 +48,7 @@ if (isset($_GET['itemCode'])) {
     <title>scaffolding</title>
     <link rel="stylesheet" href="assets/bootstrap1.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <script src="https://kit.fontawesome.com/961768b1ec.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
