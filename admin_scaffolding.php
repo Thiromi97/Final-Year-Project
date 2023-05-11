@@ -22,7 +22,13 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" href="index.html"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="inventory.php"><i class="fas fa-cubes" style="font-size: 13px;"></i><span>Inventory</span></a><a class="nav-link" href="untitled.html"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a><a class="nav-link" href="untitled.html"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a><a class="nav-link" href="untitled.html"><i class="fas fa-archive"></i><span>Return</span></a><a class="nav-link" href="untitled.html"><i class="fas fa-table"></i><span>Bill</span></a><a class="nav-link" href="untitled.html"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="inventory.php"><i class="fas fa-cubes" style="font-size: 13px;"></i><span>Inventory</span></a>
+                        <a class="nav-link" href="customer.php"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a>
+                        <a class="nav-link" href="untitled.html"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a>
+                        <a class="nav-link" href="untitled.html"><i class="fas fa-archive"></i><span>Return</span></a>
+                        <a class="nav-link" href="untitled.html"><i class="fas fa-table"></i><span>Bill</span></a>
+                        <a class="nav-link" href="untitled.html"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-sign-in-alt"></i><span>LogOut</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="register.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
                 </ul>
