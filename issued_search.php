@@ -1,53 +1,16 @@
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "scaffolding";
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-if (isset($_GET['customerCode'])) {
-    $customerCode = trim($_GET['customerCode']);
-    $sql = "SELECT * FROM customer WHERE customerCode = '$customerCode'";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $customerCode = $row['customerCode'];
-        $customerName = $row['customerName'];
-        $nic = $row['nic'];
-        $address = $row['address'];
-        $contactNo = $row['contactNo'];
-        $blackListed = $row['blackListed'];
-    } else {
-        $customerCode = 'No data found';
-        $customerName = 'No data found';
-        $nic = 'No data found';
-        $address = 'No data found';
-        $contactNo = 'No data found';
-        $blackListed = 'No data found';
-    }
-} else {
-    header("Location: customer.php");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Table - Brand</title>
+    <title>scaffolding</title>
     <link rel="stylesheet" href="assets/bootstrap1.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <script src="https://kit.fontawesome.com/961768b1ec.js" crossorigin="anonymous"></script>
 </head>
 
-<body id="page-top">
+<body>
     <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: #2D3F50;">
             <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
@@ -59,12 +22,12 @@ if (isset($_GET['customerCode'])) {
                     <li class="nav-item"><a class="nav-link" href="admin_scaffolding.php"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a>
                     <a class="nav-link" href="inventory.php"><i class="fas fa-cubes"></i><span>Inventory</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="customer.php"><i class="fas fa-user-friends"></i><span>Customer</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="issued.php"><i class="fas fa-box-open"></i><span>Issued</span></a>
-                    <a class="nav-link" href="return.php"><i class="fas fa-archive" style="font-size: 13px;"></i><span>Return</span></a>
-                    <a class="nav-link" href="bill.php"><i class="fas fa-table"></i><span>Bill</span></a>
-                    <a class="nav-link" href="payment.php"><i class="fas fa-sticky-note"></i><span>Payment</span></a>
-                    <a class="nav-link" href="login.php"><i class="fas fa-sign-out-alt" style="font-size: 13px;"></i><span>LogOut</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="customer.php"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a>
+                    <a class="nav-link" href="issued.php"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a>
+                    <a class="nav-link" href="return.php"><i class="fas fa-archive"></i><span>Return</span></a>
+                    <a class="nav-link" href="bill.php"><i class="fas fa-table" style="font-size: 15px;"></i><span>Bill</span></a>
+                    <a class="nav-link" href="payment.php"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i><span>LogOut</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="settings.php"><i class="fas fa-cog"></i><span>Settings</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
@@ -167,59 +130,40 @@ if (isset($_GET['customerCode'])) {
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Scaffolding Customer Info</h3>
+                    <h3 class="text-dark mb-4">Scaffolding Issued Info</h3>
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Customer Info</p>
+                            <p class="text-primary m-0 fw-bold">Issued</p>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th>Customer Code</th>
-                                            <th>Customer Name</th>
-                                            <th>NIC</th>
-                                            <th>Address</th>
-                                            <th>Contact No</th>
-                                            <th>Black Listed</th>
+                                            <th>Item Code</th>
+                                            <th>Bill Code</th>
+                                            <th>Item Name</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                        <td><?php echo $customerCode ?></td>
-                                            <td><?php echo $customerName;?></td>
-                                            <td><?php echo $nic; ?></td>
-                                            <td><?php echo $address; ?></td>
-                                            <td><?php echo $contactNo;?></td>
-                                            <td><?php echo $blackListed;?></td>
-                                            <td>
-                                            <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code="<?php echo $row['customerCode']; ?>"  role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
-                                                    <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code="<?php echo $row['customerCode']; ?>">
-                                                    <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
-                                                </button>
-                                            </td>
+                                            <td>ZAA</td>
+                                            <td>scaffolding</td>
+                                            <td>Supplies</td>
+                                            <td>$4200</td>
+                                            <td>$5200</td>
+                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
+                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
-                                        <tr>
-                                        </tr>
+                                        <tr></tr>
                                     </tfoot>
                                 </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center"></div>
-                                <div class="col-md-6">
-                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                        </ul>
-                                    </nav>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -227,7 +171,7 @@ if (isset($_GET['customerCode'])) {
             </div>
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2023</span></div>
+                    <div class="text-center my-auto copyright"></div>
                 </div>
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -236,52 +180,5 @@ if (isset($_GET['customerCode'])) {
     <script src="assets/bs-init1.js"></script>
     <script src="assets/theme1.js"></script>
 </body>
-<script>
-    // Get a reference to all the edit buttons
-    const editButtons = document.querySelectorAll('.edit-item-btn');
 
-    // Add a click event listener to each edit button
-    editButtons.forEach(function(editButton) {
-        editButton.addEventListener('click', function(event) {
-            // Prevent the default behavior of the link
-            event.preventDefault();
-
-            // Get the itemCode of the item that needs to be edited
-            const customerCode = editButton.getAttribute('data-item-code');
-
-            // Calculate the position of the popup window
-            const width = 600;
-            const height = 400;
-            const left = (screen.width / 2) - (width / 2);
-            const top = (screen.height / 2) - (height / 2);
-
-            // Open the popup window with the item_edit.php page and pass the itemCode in the URL
-            window.open(`customer_edit.php?customerCode=${customerCode}`, 'Popup Window', `width=${width},height=${height},left=${left},top=${top}`);
-        });
-    });
-</script>
-
-<script>
-    // Get a reference to all the delete buttons
-    const deleteButtons = document.querySelectorAll('.delete-item-btn');
-
-    // Add a click event listener to each delete button
-    deleteButtons.forEach(function(deleteButton) {
-        deleteButton.addEventListener('click', function(event) {
-            // Prevent the default behavior of the button
-            event.preventDefault();
-
-            // Get the itemCode of the item that needs to be deleted
-            const customerCode = deleteButton.getAttribute('data-item-code');
-
-            // Show a confirmation dialog box
-            const confirmed = confirm('Are you sure you want to delete this record?');
-
-            // If the user clicked "OK", delete the record
-            if (confirmed) {
-                window.location.href = `customer_delete.php?customerCode=${customerCode}`;
-            }
-        });
-    });
-</script>
 </html>

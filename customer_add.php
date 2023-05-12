@@ -31,7 +31,7 @@ if (!$conn) {
                         <div class="card-body p-sm-5">
                             <h2 class="text-center mb-4">New Customer</h2>
                             <form method="post">
-                                <div class="mb-3"><label class="form-label">Customer Code</label><input class="form-control" type="text" id="name-2" name="customerCode" placeholder="C" minlength="3" maxlength="3" required=""></div>
+                                <div class="mb-3"><label class="form-label">Customer Code</label><input class="form-control" type="text" id="name-2" name="customerCode" placeholder="Customer Code(CXX foramt)" minlength="3" maxlength="3" required=""></div>
                                 <div class="mb-3"><label class="form-label">Customer Name</label><input class="form-control" type="text" id="name-3" name="customerName" maxlength="200" required="" placeholder="Customer Name"></div>
                                 <div class="mb-3"><label class="form-label">NIC</label><input class="form-control" type="text" id="name-4" name="nic" maxlength="12" required="" placeholder="NIC"></div>
                                 <div class="mb-3"><label class="form-label">Address</label><input class="form-control" type="text" id="name-1" name="address" maxlength="200" required="" placeholder="Address"></div>
@@ -55,22 +55,30 @@ if (!$conn) {
                                 $Address = mysqli_real_escape_string($conn, $_POST['address']);
                                 $ContactNo = mysqli_real_escape_string($conn, $_POST['contactNo']);
                                 $BlackListed = mysqli_real_escape_string($conn, $_POST['blackListed']);
-                                
-                                // Attempt insert query execution
-                                $sql = "SELECT customerCode FROM customer WHERE customerCode = '$CustomerCode'";
-                                $result = mysqli_query($conn, $sql);
-                                if (mysqli_num_rows($result) > 0) {
-                                    // If the itemCode already exists, show an error message
-                                    echo "ERROR: Customer with code $CustomerCode already exists.";
-                                } else {
-                                    // If the itemCode doesn't exist, attempt insert query execution
-                                    $sql = "INSERT INTO customer (customerCode, customerName,nic,address,contactNo,blackListed) VALUES ('$CustomerCode', '$CustomerName', '$Nic', '$Address', '$ContactNo', '$BlackListed')";
-                                    if(mysqli_query($conn, $sql)){
-                                        echo "Records added successfully.";
-                                    } else{
-                                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                            
+                                // Check if the customer code starts with "C"
+                                if (substr($CustomerCode, 0, 1) === 'C') {
+                                    // Attempt insert query execution
+                                    $sql = "SELECT customerCode FROM customer WHERE customerCode = '$CustomerCode'";
+                                    $result = mysqli_query($conn, $sql);
+                                    
+                                    if (mysqli_num_rows($result) > 0) {
+                                        // If the customer code already exists, show an error message
+                                        echo "ERROR: Customer with code $CustomerCode already exists.";
+                                    } else {
+                                        // If the customer code doesn't exist, attempt insert query execution
+                                        $sql = "INSERT INTO customer (customerCode, customerName, nic, address, contactNo, blackListed) VALUES ('$CustomerCode', '$CustomerName', '$Nic', '$Address', '$ContactNo', '$BlackListed')";
+                                        
+                                        if(mysqli_query($conn, $sql)){
+                                            echo "Records added successfully.";
+                                        } else{
+                                            echo "ERROR: Could not execute $sql. " . mysqli_error($conn);
+                                        }
                                     }
-                                }                      
+                                } else {
+                                    echo "ERROR: Customer code must start with 'C'.";
+                                }
+                                
                                 mysqli_close($conn);
                             }
                             ?>

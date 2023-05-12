@@ -61,7 +61,7 @@ if (isset($_GET['itemCode'])) {
                             <h2 class="text-center mb-4">Confirm Delete</h2>
                             <h5 class="text-center text-primary mb-4">Are you sure you want to delete this item?</h5>
                             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                                <div class="mb-3"><label class="form-label">Item Code</label><input class="form-control" type="text" id="name-2" name="itemCode" placeholder="Z" minlength="3" maxlength="3" required="" value="<?php echo $itemCode; ?>" readonly></div>
+                                <div class="mb-3"><label class="form-label">Item Code</label><input class="form-control" type="text" id="name-2" name="itemCode" placeholder="Item Code(ZXX foramt)" minlength="3" maxlength="3" required="" value="<?php echo $itemCode; ?>" readonly></div>
                                 <div class="mb-3"><label class="form-label">Item Name</label><input class="form-control" type="text" id="name-3" name="itemName" required="" placeholder="ItemName" value="<?php echo $itemName; ?>" readonly></div>
                                 <div class="mb-3"></div>
                                 <div class="mb-3"><label class="form-label">Category</label><select class="form-select" name="category" required="" value="Category">
