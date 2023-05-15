@@ -7,7 +7,6 @@
     <title>Dashboard - Scaffolding </title>
     <link rel="stylesheet" href="assets/bootstrap1.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <!-- <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css"> -->
     <script src="https://kit.fontawesome.com/961768b1ec.js" crossorigin="anonymous"></script>
 </head>
 
@@ -20,7 +19,7 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link active" href="admin_scaffolding.php"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="admin_scaffolding/admin_scaffolding.php"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="inventory.php"><i class="fas fa-cubes" style="font-size: 13px;"></i><span>Inventory</span></a>
                         <a class="nav-link" href="customer.php"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a>
