@@ -26,7 +26,9 @@
                     <a class="nav-link" href="issued.php"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a>
                     <a class="nav-link" href="return.php"><i class="fas fa-archive"></i><span>Return</span></a>
                     <a class="nav-link" href="bill.php"><i class="fas fa-table" style="font-size: 15px;"></i><span>Bill</span></a>
+                    <a class="nav-link" href="bill_add.php"><i class="fas fa-newspaper" style="font-size: 16px;"></i> <span>Add Bill</span>
                     <a class="nav-link" href="payment.php"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a></li>
+                    <a class="nav-link" href="refund.php"><i class="fas fa-file-import" style="font-size: 16px;"></i><span>Refund</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i><span>LogOut</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="settings.php"><i class="fas fa-cog"></i><span>Settings</span></a></li>
                 </ul>
