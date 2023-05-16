@@ -1,51 +1,12 @@
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "scaffolding";
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-if (isset($_GET['itemCode'])) {
-    $itemCode = trim($_GET['itemCode']);
-    $sql = "SELECT * FROM inventory WHERE itemCode = '$itemCode'";
-    $result = mysqli_query($conn, $sql);
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $itemCode = $row['itemCode'];
-        $itemName = $row['itemName'];
-        $category = $row['category'];
-        $purchasePrice = $row['purchasePrice'];
-        $marketPrice = $row['marketPrice'];
-        $quantity = $row['quantity'];
-    } else {
-        $itemCode = 'No data found';
-        $itemName = 'No data found';
-        $category = 'No data found';
-        $purchasePrice = 'No data found';
-        $marketPrice = 'No data found';
-        $quantity = 'No data found';
-    }
-} else {
-    header("Location: inventory.php");
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Table - Brand</title>
+    <title>Table - Refund</title>
     <link rel="stylesheet" href="assets/bootstrap1.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <!-- <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css"> -->
     <script src="https://kit.fontawesome.com/961768b1ec.js" crossorigin="anonymous"></script>
 </head>
 
@@ -59,15 +20,15 @@ if (isset($_GET['itemCode'])) {
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="admin_scaffolding.php"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="inventory.php"><i class="fas fa-cubes" style="font-size: 13px;"></i><span>Inventory</span></a>
+                    <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a>
+                    <li class="nav-item"><a class="nav-link" href="inventory.php"><i class="fas fa-cubes"></i><span>Inventory</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="customer.php"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a>
                     <li class="nav-item"><a class="nav-link" href="issued.php"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a>
                     <li class="nav-item"><a class="nav-link" href="return.php"><i class="fas fa-archive"></i><span>Return</span></a>
-                    <li class="nav-item"><a class="nav-link" href="bill.php"><i class="fas fa-table"></i><span>Bill</span></a>
-                    <li class="nav-item"><a class="nav-link" href="bill_add.php"><i class="fas fa-newspaper" style="font-size: 16px;"></i> <span>Add Bill</span>
-                    <li class="nav-item"><a class="nav-link" href="payment.php"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="refund.php"><i class="fas fa-file-invoice" style="font-size: 16px;"></i><span>Refund</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="bill.php"><i class="fas fa-table" style="font-size: 15px;"></i><span>Bill</span></a>
+                    <li class="nav-item"><a class="nav-link" href="bill_add.php"><i class="fas fa-newspaper" style="font-size: 16px;"></i><span>Add Bill</span></a>
+                    <li class="nav-item"><a class="nav-link" href="payment.php"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a>
+                    <li class="nav-item"><a class="nav-link active" href="refund.php"><i class="fas fa-file-invoice" style="font-size: 16px;"></i><span>Refund</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-in-alt"></i><span>LogOut</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="settings.php"><i class="fas fa-cog"></i><span>Settings</span></a></li>
                 </ul>
@@ -171,49 +132,79 @@ if (isset($_GET['itemCode'])) {
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-4">Scaffolding Inventory Info</h3>
+                    <h3 class="text-dark mb-4">Scaffolding Refund Info</h3>
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Inventory</p>
+                            <p class="text-primary m-0 fw-bold">Refund&nbsp;</p>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                            <div class="row">
+                                <div class="col-md-6 text-nowrap">
+                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
+                                                <option value="10" selected="">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>&nbsp;</label></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                                </div>
+                            </div>
+                            <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
                                 <table class="table my-0" id="dataTable">
                                     <thead>
                                         <tr>
-                                            <th>Item Code</th>
-                                            <th>Item Name</th>
-                                            <th>Category</th>
-                                            <th>Purchased Price</th>
-                                            <th>Market Price</th>
-                                            <th>Quantity</th>
+                                            <th>Refund Id</th>
+                                            <th>Payment Code</th>
+                                            <th>Customer Code</th>
+                                            <th>Refund Date</th>
+                                            <th>Refund Amount</th>
+                                            <th>Refund Method</th>
+                                            <th>Refund Receipt</th>
                                             <th></th>
+                                            <th><a class="btn btn-primary btn-circle ms-1" role="button"><i class="fas fa-plus text-white" style="font-size: 17px;"></i></a></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><?php echo $itemCode; ?></td>
-                                            <td><?php echo $itemName;?></td>
-                                            <td><?php echo $category; ?></td>
-                                            <td><?php echo $purchasePrice; ?></td>
-                                            <td><?php echo $marketPrice; ?></td>
-                                            <td><?php echo $quantity; ?></td>
-                                            <td>
-                                                <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code="<?php echo $row['itemCode']; ?>"  role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
-                                                    <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code="<?php echo $row['itemCode']; ?>">
-                                                    <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
-                                                </button>
-                                            </td>
+                                            <td>Cedric Kelly</td>
+                                            <td>Senior</td>
+                                            <td>Edinburgh</td>
+                                            <td>22</td>
+                                            <td>2012/03/29<br></td>
+                                            <td>$433,060</td>
+                                            <td><a class="btn btn-warning btn-circle ms-1" role="button"><i class="fas fa-file-invoice-dollar text-white" style="font-size: 17px;"></i></a></td>
+                                            <td><a class="btn btn-success btn-circle ms-1" role="button"><i class="fas fa-pencil-alt text-white"></i></a></td>
+                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white"></i></a></td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
-                                        <tr></tr>
+                                        <tr>
+                                            <td><strong>Refund Id</strong></td>
+                                            <td><strong>Payment Code</strong></td>
+                                            <td><strong>Customer Code</strong></td>
+                                            <td><strong>Refund Date</strong></td>
+                                            <td><strong>Refund Amount</strong></td>
+                                            <td><strong>Refund Method</strong></td>
+                                            <td><strong>Refund Receipt</strong></td>
+                                        </tr>
                                     </tfoot>
                                 </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 align-self-center"></div>
+                                <div class="col-md-6">
+                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination">
+                                            <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
+                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -230,53 +221,5 @@ if (isset($_GET['itemCode'])) {
     <script src="assets/bs-init1.js"></script>
     <script src="assets/theme1.js"></script>
 </body>
-<script>
-    // Get a reference to all the edit buttons
-    const editButtons = document.querySelectorAll('.edit-item-btn');
-
-    // Add a click event listener to each edit button
-    editButtons.forEach(function(editButton) {
-        editButton.addEventListener('click', function(event) {
-            // Prevent the default behavior of the link
-            event.preventDefault();
-
-            // Get the itemCode of the item that needs to be edited
-            const itemCode = editButton.getAttribute('data-item-code');
-
-            // Calculate the position of the popup window
-            const width = 600;
-            const height = 400;
-            const left = (screen.width / 2) - (width / 2);
-            const top = (screen.height / 2) - (height / 2);
-
-            // Open the popup window with the item_edit.php page and pass the itemCode in the URL
-            window.open(`item_edit.php?itemCode=${itemCode}`, 'Popup Window', `width=${width},height=${height},left=${left},top=${top}`);
-        });
-    });
-</script>
-
-<script>
-    // Get a reference to all the delete buttons
-    const deleteButtons = document.querySelectorAll('.delete-item-btn');
-
-    // Add a click event listener to each delete button
-    deleteButtons.forEach(function(deleteButton) {
-        deleteButton.addEventListener('click', function(event) {
-            // Prevent the default behavior of the button
-            event.preventDefault();
-
-            // Get the itemCode of the item that needs to be deleted
-            const itemCode = deleteButton.getAttribute('data-item-code');
-
-            // Show a confirmation dialog box
-            const confirmed = confirm('Are you sure you want to delete this record?');
-
-            // If the user clicked "OK", delete the record
-            if (confirmed) {
-                window.location.href = `item_delete.php?itemCode=${itemCode}`;
-            }
-        });
-    });
-</script>
 
 </html>
