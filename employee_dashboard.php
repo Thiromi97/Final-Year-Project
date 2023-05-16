@@ -4,34 +4,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Scaffolding </title>
-    <link rel="stylesheet" href="assets/bootstrap1.min.css">
+    <title>Dashboard - Employee</title>
+    <link rel="stylesheet" href="assets/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <script src="https://kit.fontawesome.com/961768b1ec.js" crossorigin="anonymous"></script>
 </head>
 
-<body id="page-top" style="--bs-primary: #2D3F50;--bs-primary-rgb: 45,63,80;--bs-success: #3AB795;--bs-success-rgb: 58,183,149;--bs-info: #55B3E0;--bs-info-rgb: 85,179,224;--bs-warning: #F5A623;--bs-warning-rgb: 245,166,35;">
+<body id="page-top" style="--bs-primary: #aa4498;--bs-success: #2ca02c;--bs-success-rgb: 44,160,44;--bs-danger: #FF0000;--bs-danger-rgb: 255,0,0;--bs-warning: #fe4e4e;--bs-warning-rgb: 254,78,78;--bs-secondary: #808080;--bs-info: #01b8aa;--bs-info-rgb: 1,184,170;--bs-light: #F5F5F5;--bs-light-rgb: 245,245,245;--bs-dark: #2E2E2E;--bs-dark-rgb: 46,46,46;--bs-secondary-rgb: 128,128,128;--bs-primary-rgb: 170,68,152;">
     <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: #2D3F50;">
+        <nav class="navbar navbar-dark bg-primary align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: #0000ff;">
             <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-dice-d20" style="font-size: 23px;"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>asian enginners</span></div>
+                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-dice-d20" style="font-size: 21px;"></i></div>
+                    <div class="sidebar-brand-text mx-3"><span>ASian Enginners</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link active" href="admin_scaffolding.php"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="employee_dashboard.php"><i class="fas fa-bars" style="font-size: 14px;"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="inventory.php"><i class="fas fa-cubes" style="font-size: 13px;"></i><span>Inventory</span></a>
-                    <li class="nav-item"><a class="nav-link" href="customer.php"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a>
-                    <li class="nav-item"><a class="nav-link" href="issued.php"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a>
-                    <li class="nav-item"><a class="nav-link" href="return.php"><i class="fas fa-archive"></i><span>Return</span></a>
-                    <li class="nav-item"><a class="nav-link" href="bill.php"><i class="fas fa-table"></i><span>Bill</span></a>
-                    <li class="nav-item"><a class="nav-link" href="bill_add.php"><i class="fas fa-newspaper" style="font-size: 16px;"></i> <span>Add Bill</span>
-                    <li class="nav-item"><a class="nav-link" href="payment.php"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a>
-                    <li class="nav-item"><a class="nav-link" href="refund.php"><i class="fas fa-file-invoice" style="font-size: 16px;"></i><span>Refund</span></a></li>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="scaffolding_login.php"><i class="fas fa-sign-in-alt"></i><span>LogOut</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="settings.php"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-table"></i><span>Scaffolding</span></a><a class="nav-link" href="table.html"><i class="fas fa-th" style="font-size: 13px;"></i><span>Reinforcement</span></a><a class="nav-link" href="table.html"><i class="fas fa-th-large"></i><span>Reinforcement Estimate</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-out-alt" style="font-size: 14px;"></i><span>LogOut</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="account.php"><i class="fas fa-cog"></i><span>&nbsp;Settings</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -41,7 +34,7 @@
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
                         <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button" style="background: #2D3F50;"><i class="fas fa-search"></i></button></div>
+                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button" style="background: #aa4498;"><i class="fas fa-search"></i></button></div>
                         </form>
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
@@ -142,7 +135,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Total Inventory value</span></div>
+                                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>total inventory value</span></div>
                                             <div class="text-dark fw-bold h5 mb-0"><span>$40,000</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-boxes fa-2x text-gray-300"></i></div>
@@ -170,8 +163,8 @@
                                         <div class="col me-2">
                                             <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>overdue payments</span></div>
                                             <div class="row g-0 align-items-center">
-                                                <div class="col-auto col-lg-12">
-                                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span>$60,000</span></div>
+                                                <div class="col-auto col-md-12">
+                                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span>$50,000</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -185,7 +178,7 @@
                                 <div class="card-body">
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
-                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Item on return</span></div>
+                                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>item on return</span></div>
                                             <div class="text-dark fw-bold h5 mb-0"><span>18</span></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-dolly-flatbed fa-2x text-gray-300"></i></div>
@@ -195,7 +188,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 col-xl-8">
+                        <div class="col-lg-7 col-xl-8">
                             <div class="card shadow mb-4">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <h6 class="text-primary fw-bold m-0">Total Inventory Overview</h6>
@@ -207,7 +200,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;#55B3E0&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;#01b8aa&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
                                 </div>
                             </div>
                         </div>
@@ -223,45 +216,45 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Tools&quot;,&quot;Supplies&quot;,&quot;Equipment&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Product&quot;,&quot;backgroundColor&quot;:[&quot;#2d3f50&quot;,&quot;#3AB795&quot;,&quot;#55B3E0&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;,&quot;15&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}"></canvas></div>
-                                    <div class="text-center small mt-4"><span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;Tools</span><span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;Supplies</span><span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;Equipment</span></div>
+                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Tools&quot;,&quot;Equipments&quot;,&quot;Supplies&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#aa4498&quot;,&quot;#01b8aa&quot;,&quot;#2ca02c&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;,&quot;15&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}"></canvas></div>
+                                    <div class="text-center small mt-4"><span class="me-2"><i class="fas fa-circle text-primary text-primary"></i>&nbsp;Tools</span><span class="me-2"><i class="fas fa-circle text-success text-success"></i>&nbsp;Supplies</span><span class="me-2"><i class="fas fa-circle text-info text-info"></i>&nbsp;Equipment</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-5 mb-4">
+                        <div class="col-lg-6 mb-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="text-primary fw-bold m-0">Projects</h6>
+                                    <h6 class="text-primary fw-bold m-0">Overview</h6>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small fw-bold">Inventory Turnover<span class="float-end">60%</span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="visually-hidden">60%</span></div>
+                                        <div class="progress-bar bg-warning" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100" style="width: 66%;"><span class="visually-hidden">66%</span></div>
                                     </div>
                                     <h4 class="small fw-bold">Bill Payment Rate<span class="float-end">50%</span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-success" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"><span class="visually-hidden">50%</span></div>
+                                        <div class="progress-bar bg-primary" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"><span class="visually-hidden">50%</span></div>
                                     </div>
-                                    <h4 class="small fw-bold">Return Rate<span class="float-end">30%</span></h4>
+                                    <h4 class="small fw-bold">Return Rate&nbsp;<span class="float-end">40%</span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-info" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;"><span class="visually-hidden">30%</span></div>
                                     </div>
                                     <h4 class="small fw-bold">Issued Utilization Rate<span class="float-end">80%</span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-primary" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"><span class="visually-hidden">80%</span></div>
+                                        <div class="progress-bar bg-success" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"><span class="visually-hidden">80%</span></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-7">
+                        <div class="col-lg-6 mb-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
                                     <h6 class="text-primary fw-bold m-0">Sales Trends</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Item1&quot;,&quot;Item2&quot;,&quot;Item3&quot;,&quot;Item4&quot;,&quot;Item5&quot;,&quot;Item6&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Products&quot;,&quot;backgroundColor&quot;:&quot;#F5A623&quot;,&quot;borderColor&quot;:&quot;#F5A623&quot;,&quot;data&quot;:[&quot;4512&quot;,&quot;5312&quot;,&quot;6251&quot;,&quot;7841&quot;,&quot;9821&quot;,&quot;14984&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                                    <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Item1&quot;,&quot;Item2&quot;,&quot;Item3&quot;,&quot;Item4&quot;,&quot;Item5&quot;,&quot;Item6&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Products&quot;,&quot;backgroundColor&quot;:&quot;#fe4e4e&quot;,&quot;borderColor&quot;:&quot;#fe4e4e&quot;,&quot;data&quot;:[&quot;4512&quot;,&quot;5312&quot;,&quot;6251&quot;,&quot;7841&quot;,&quot;9821&quot;,&quot;14984&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
                                 </div>
                             </div>
                         </div>
@@ -270,10 +263,10 @@
             </div>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-    <script src="assets/bootstrap1.min.js"></script>
-    <script src="assets/chart1.min.js"></script>
-    <script src="assets/bs-init1.js"></script>
-    <script src="assets/theme1.js"></script>
+    <script src="assets/bootstrap.min.js"></script>
+    <script src="assets/chart.min.js"></script>
+    <script src="assets/bs-init.js"></script>
+    <script src="assets/theme.js"></script>
 </body>
 
 </html>
