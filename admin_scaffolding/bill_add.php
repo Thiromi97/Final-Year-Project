@@ -1,35 +1,4 @@
 <?php
-// // Assuming you have a database connection established
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname = "scaffolding";
-
-// // Create a connection
-// $connection = mysqli_connect($servername, $username, $password, $dbname);
-
-// // Check the connection
-// if (!$connection) {
-//     die("Connection failed: " . mysqli_connect_error());
-// }
-
-// // Function to retrieve the market price based on the item code
-// function getMarketPrice($connection, $itemCode) {
-//     $query = "SELECT marketPrice FROM inventory WHERE itemCode = '$itemCode'";
-//     $result = mysqli_query($connection, $query);
-//     $row = mysqli_fetch_assoc($result);
-//     return $row['marketPrice'];
-// }
-
-// // Check if the form is submitted
-// if ($_SERVER["REQUEST_METHOD"] === "POST") {
-//     $itemCode = $_POST['items'];
-//     $quantity = $_POST['quantity'];
-//     $marketPrice = getMarketPrice($connection, $itemCode);
-//     $price = $quantity * $marketPrice;
-//     echo "Price: " . $price;
-// }
-<?php
 // Assuming you have a database connection established
 $servername = "localhost";
 $username = "root";
@@ -45,7 +14,8 @@ if (!$connection) {
 }
 
 // Function to retrieve the market price based on the item code
-function getMarketPrice($connection, $itemCode) {
+function getMarketPrice($connection, $itemCode)
+{
     $query = "SELECT marketPrice FROM inventory WHERE itemCode = '$itemCode'";
     $result = mysqli_query($connection, $query);
     $row = mysqli_fetch_assoc($result);
@@ -69,23 +39,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $totalAmount = $_POST['totalAmount'];
         $paymentStatus = $_POST['paymentStatus'];
         $dueDate = $_POST['dueDate'];
+        $remaningAmount = $_POST['remaningAmount'];
 
-        $insertBillQuery = "INSERT INTO bill (billCode, customerCode, billDate, totalAmount, paymentStatus, dueDate) VALUES ('$billCode', '$customerCode', '$billDate', '$totalAmount', '$paymentStatus', '$dueDate')";
-
+        $insertBillQuery = "INSERT INTO bill (billCode, customerCode, billDate, totalAmount, paymentStatus, dueDate,remaningAmount) VALUES ('$billCode', '$customerCode', '$billDate', '$totalAmount', '$paymentStatus', '$dueDate','$remaningAmount')";
         if (mysqli_query($connection, $insertBillQuery)) {
             // Get the inserted bill ID
             $billId = mysqli_insert_id($connection);
 
             // Insert records into the issued table for each item
+            // Insert records into the issued table for each item
             $addedItems = $_POST['items'];
             $quantities = $_POST['quantity'];
 
-            foreach ($addedItems as $index => $itemCode) {
-                $quantity = $quantities[$index];
+            // Convert the addedItems and quantities to arrays if they are not already
+            if (!is_array($addedItems)) {
+                $addedItems = [$addedItems];
+            }
+            if (!is_array($quantities)) {
+                $quantities = [$quantities];
+            }
+            for ($i = 0; $i < count($addedItems); $i++) {
+                $itemCode = $addedItems[$i];
+                $quantity = $quantities[$i];
                 $marketPrice = getMarketPrice($connection, $itemCode);
                 $price = $quantity * $marketPrice;
 
-                $insertIssuedQuery = "INSERT INTO issued (itemCode, billCode, itemName, quantity, price) VALUES ('$itemCode', '$billCode', (SELECT itemName FROM inventory WHERE itemCode = '$itemCode'), '$quantity', '$price')";
+                $insertIssuedQuery = "INSERT INTO issued (billCode, itemCode, itemName, quantity, price) VALUES ('$billCode', '$itemCode', (SELECT itemName FROM inventory WHERE itemCode = '$itemCode'), '$quantity', '$price')";
 
                 mysqli_query($connection, $insertIssuedQuery);
             }
@@ -96,9 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-
-mysqli_close($connection);
-?>
+             
+// mysqli_close($connection);
 ?>
 
 <!DOCTYPE html>
@@ -271,49 +249,48 @@ mysqli_close($connection);
                                         </button>
                                          </div>
                                       </div>';
-  
                                         } else {
                                             echo 'No items found in the inventory.';
                                         }
 
-                                      
+
                                         // mysqli_close($connection);
                                         ?>
-                                </div>
-                                <div class="row">
-                                <div id="added-items-container"></div>
-                                </div>
-                                <div id="added-items-container"></div> <!-- Container to hold the added items -->
-                                <div class="mb-3"></div>
-                                <div class="mb-3"></div>
-                                <div class="mb-3" style="margin-bottom: 15px;"><label class="form-label">Total Amount</label><input class="form-control" type="number" name="totalAmount" id="totalAmount" readonly></div>
-                                <div class="mb-3"><label class="form-label">Paid Amount</label><input class="form-control" type="number" name="paidAmount" oninput="calculateRemainingAmount()"></div>
-                                <div class="mb-3"><label class="form-label">Remaining Amount</label><input class="form-control" type="number" name="remainingAmount" id="remainingAmount" readonly></div>
-                                <div class="mb-3"><label class="form-label">Payment Status</label><select class="form-select" name="paymentStatus">
-                                        <option value="undefined">Paid</option>
-                                        <option value="undefined">Partially Paid</option>
-                                        <option value="undefined">Unpaid</option>
-                                    </select></div>
-                                <div class="mb-3">
+                                    </div>
                                     <div class="row">
-                                        <div class="col-lg-10"><label class="form-label">Customer Name</label>
-                                            <input class="form-control" type="text" id="search-bar-customer" placeholder="Search for customers" style="margin-bottom: 7px;padding-bottom: 3px;margin-top: 5px;">
-                                        <?php
-                                        $query = "SELECT customerCode,customerName FROM customer";
-                                        $result = mysqli_query($connection, $query);
+                                        <div id="added-items-container"></div>
+                                    </div>
+                                    <div id="added-items-container"></div> <!-- Container to hold the added items -->
+                                    <div class="mb-3"></div>
+                                    <div class="mb-3"></div>
+                                    <div class="mb-3" style="margin-bottom: 15px;"><label class="form-label">Total Amount</label><input class="form-control" type="number" name="totalAmount" id="totalAmount" readonly></div>
+                                    <div class="mb-3"><label class="form-label">Paid Amount</label><input class="form-control" type="number" name="paidAmount" oninput="calculateRemainingAmount()"></div>
+                                    <div class="mb-3"><label class="form-label">Remaining Amount</label><input class="form-control" type="number" name="remaningAmount" id="remaningAmount" readonly></div>
+                                    <div class="mb-3"><label class="form-label">Payment Status</label><select class="form-select" name="paymentStatus">
+                                            <option value="Paid">Paid</option>
+                                            <option value="Partially Paid">Partially Paid</option>
+                                            <option value="Unpaid">Unpaid</option>
+                                        </select></div>
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col-lg-10"><label class="form-label">Customer Name</label>
+                                                <input class="form-control" type="text" id="search-bar-customer" placeholder="Search for customers" style="margin-bottom: 7px;padding-bottom: 3px;margin-top: 5px;">
+                                                <?php
+                                                $query = "SELECT customerCode,customerName FROM customer";
+                                                $result = mysqli_query($connection, $query);
 
-                                        // Check if the query was successful
-                                        if ($result && mysqli_num_rows($result) > 0) {
-                                            // Start the <select> element
-                                            echo '<select class="form-select" name="customerName" id="customer-select">';
+                                                // Check if the query was successful
+                                                if ($result && mysqli_num_rows($result) > 0) {
+                                                    // Start the <select> element
+                                                    echo '<select class="form-select" name="customerName" id="customer-select">';
 
-                                            // Loop through the results and create an <option> element for each item name
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                $customerCode = $row['customerCode'];
-                                                $customerName = $row['customerName'];
-                                                echo '<option value="' . $customerCode . '">' . $customerName . '</option>';
-                                            }
-                                            echo '</select>
+                                                    // Loop through the results and create an <option> element for each item name
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        $customerCode = $row['customerCode'];
+                                                        $customerName = $row['customerName'];
+                                                        echo '<option value="' . $customerCode . '">' . $customerName . '</option>';
+                                                    }
+                                                    echo '</select>
                                          </div>
                                          <div class="col">
                                          <button class="btn btn-primary btn-icon-split" id="add-customer-btn" type="button" style="margin-top: 38px;">
@@ -321,23 +298,22 @@ mysqli_close($connection);
                                         </button>
                                          </div>
                                       </div>';
-  
-                                        } else {
-                                            echo 'No customer found in the  customer table.';
-                                        }
-                                      
-                                        mysqli_close($connection);
-                                        ?>
-                                </div>
-                                <div class="mb-3"><label class="form-label">Customer Code</label><input class="form-control" type="text" name="customerCode" placeholder="Customer Code"></div>
-                                <div class="mb-3"><label class="form-label">Bill Code</label><input class="form-control" type="text" name="billCode" placeholder="Bill Code"></div>
-                                <div class="mb-3"><label class="form-label">Bill Date</label><input class="form-control" type="date" name="billDate"></div>
-                                <div class="mb-3"><label class="form-label">Due Date</label><input class="form-control" type="date" name="dueDate"></div>
-                                <div>
-                                    <div class="row">
-                                        <div class="col"><input class="btn btn-primary" type="submit" style="width: 100%;" name="Save" value="Save"></div>
-                                    </div>
-                                </div>
+                                                } else {
+                                                    echo 'No customer found in the  customer table.';
+                                                }
+
+                                                mysqli_close($connection);
+                                                ?>
+                                            </div>
+                                            <div class="mb-3"><label class="form-label">Customer Code</label><input class="form-control" type="text" name="customerCode" placeholder="Customer Code"></div>
+                                            <div class="mb-3"><label class="form-label">Bill Code</label><input class="form-control" type="text" name="billCode" placeholder="Bill Code"></div>
+                                            <div class="mb-3"><label class="form-label">Bill Date</label><input class="form-control" type="date" name="billDate"></div>
+                                            <div class="mb-3"><label class="form-label">Due Date</label><input class="form-control" type="date" name="dueDate"></div>
+                                            <div>
+                                                <div class="row">
+                                                    <div class="col"><input class="btn btn-primary" type="submit" style="width: 100%;" name="Save" value="Save"></div>
+                                                </div>
+                                            </div>
                         </form>
                     </div>
                 </div>
@@ -356,7 +332,7 @@ mysqli_close($connection);
 <script>
     var searchBar = document.getElementById('search-bar');
     var itemSelect = document.getElementById('item-select');
-    var originalOptions = Array.from(itemSelect.options);
+    var originalItemOptions = Array.from(itemSelect.options);
 
     searchBar.addEventListener('input', function(event) {
         var searchTerm = event.target.value.toLowerCase();
@@ -365,7 +341,7 @@ mysqli_close($connection);
         itemSelect.innerHTML = '';
 
         // Filter the original options based on the search term
-        var filteredOptions = originalOptions.filter(function(option) {
+        var filteredOptions = originalItemOptions.filter(function(option) {
             var optionText = option.text.toLowerCase();
             return optionText.startsWith(searchTerm);
         });
@@ -397,11 +373,11 @@ mysqli_close($connection);
                     newItemContainer.innerHTML = `
                         <div class="col" style="margin-bottom: 30px;">
                             <label class="form-label">Item Code</label>
-                            <input class="form-control" type="text" value="${selectedItemCode}" readonly>
+                            <input class="form-control" type="text" name="itemCode" value="${selectedItemCode}" readonly>
                         </div>  
                         <div class="col" style="margin-bottom: 15px;">
                             <label class="form-label">Item Name</label>
-                            <input class="form-control" type="text" value="${selectedItemName}" readonly>
+                            <input class="form-control" type="text" name="itemName" value="${selectedItemName}" readonly>
                         </div> 
                         <div class="col" style="margin-bottom: 15px;">
                             <label class="form-label">Quantity</label>
@@ -461,21 +437,22 @@ mysqli_close($connection);
 
         // Update the total amount input with the calculated total price
         totalAmountInput.value = totalPrice.toFixed(2);
- calculateRemainingAmount();
+        calculateRemainingAmount();
     }
-function calculateRemainingAmount() {
-    var totalAmount = parseFloat(totalAmountInput.value);
-    var paidAmount = parseFloat(document.getElementsByName('paidAmount')[0].value); // Parse paidAmount as float
-    var remainingAmountInput = document.getElementById('remainingAmount');
-    var remainingAmount = totalAmount - paidAmount;
-    remainingAmountInput.value = remainingAmount.toFixed(2);
-}
+
+    function calculateRemainingAmount() {
+        var totalAmount = parseFloat(totalAmountInput.value);
+        var paidAmount = parseFloat(document.getElementsByName('paidAmount')[0].value); // Parse paidAmount as float
+        var remainingAmountInput = document.getElementById('remaningAmount');
+        var remainingAmount = totalAmount - paidAmount;
+        remainingAmountInput.value = remainingAmount.toFixed(2);
+    }
 </script>
 
 <script>
-    var searchBarCustomer = document.getElementById('search-bar-customer');
+   var searchBarCustomer = document.getElementById('search-bar-customer');
     var customerSelect = document.getElementById('customer-select');
-    var originalOptions = Array.from(customerSelect.options);
+    var originalCustomerOptions = Array.from(customerSelect.options);
 
     searchBarCustomer.addEventListener('input', function(event) {
         var searchTerm = event.target.value.toLowerCase();
@@ -484,7 +461,7 @@ function calculateRemainingAmount() {
         customerSelect.innerHTML = '';
 
         // Filter the original options based on the search term
-        var filteredOptions = originalOptions.filter(function(option) {
+        var filteredOptions = originalCustomerOptions.filter(function(option) {
             var optionText = option.text.toLowerCase();
             return optionText.startsWith(searchTerm);
         });
@@ -494,7 +471,6 @@ function calculateRemainingAmount() {
             customerSelect.appendChild(option.cloneNode(true));
         });
     });
-
     var addCustomerBtn = document.getElementById('add-customer-btn');
     var addedCustomerContainer = document.getElementById('added-customers-container');
 
@@ -513,5 +489,4 @@ function calculateRemainingAmount() {
 
 
 </body>
-
 </html>
