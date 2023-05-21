@@ -1,4 +1,35 @@
 <?php
+// // Assuming you have a database connection established
+// $servername = "localhost";
+// $username = "root";
+// $password = "";
+// $dbname = "scaffolding";
+
+// // Create a connection
+// $connection = mysqli_connect($servername, $username, $password, $dbname);
+
+// // Check the connection
+// if (!$connection) {
+//     die("Connection failed: " . mysqli_connect_error());
+// }
+
+// // Function to retrieve the market price based on the item code
+// function getMarketPrice($connection, $itemCode) {
+//     $query = "SELECT marketPrice FROM inventory WHERE itemCode = '$itemCode'";
+//     $result = mysqli_query($connection, $query);
+//     $row = mysqli_fetch_assoc($result);
+//     return $row['marketPrice'];
+// }
+
+// // Check if the form is submitted
+// if ($_SERVER["REQUEST_METHOD"] === "POST") {
+//     $itemCode = $_POST['items'];
+//     $quantity = $_POST['quantity'];
+//     $marketPrice = getMarketPrice($connection, $itemCode);
+//     $price = $quantity * $marketPrice;
+//     echo "Price: " . $price;
+// }
+<?php
 // Assuming you have a database connection established
 $servername = "localhost";
 $username = "root";
@@ -12,6 +43,62 @@ $connection = mysqli_connect($servername, $username, $password, $dbname);
 if (!$connection) {
     die("Connection failed: " . mysqli_connect_error());
 }
+
+// Function to retrieve the market price based on the item code
+function getMarketPrice($connection, $itemCode) {
+    $query = "SELECT marketPrice FROM inventory WHERE itemCode = '$itemCode'";
+    $result = mysqli_query($connection, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row['marketPrice'];
+}
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $billCode = $_POST['billCode'];
+
+    // Check if the billCode already exists in the bill table
+    $checkQuery = "SELECT * FROM bill WHERE billCode = '$billCode'";
+    $checkResult = mysqli_query($connection, $checkQuery);
+
+    if (mysqli_num_rows($checkResult) > 0) {
+        echo "Bill with the same billCode already exists.";
+    } else {
+        // Insert record into the bill table
+        $customerCode = $_POST['customerCode'];
+        $billDate = $_POST['billDate'];
+        $totalAmount = $_POST['totalAmount'];
+        $paymentStatus = $_POST['paymentStatus'];
+        $dueDate = $_POST['dueDate'];
+
+        $insertBillQuery = "INSERT INTO bill (billCode, customerCode, billDate, totalAmount, paymentStatus, dueDate) VALUES ('$billCode', '$customerCode', '$billDate', '$totalAmount', '$paymentStatus', '$dueDate')";
+
+        if (mysqli_query($connection, $insertBillQuery)) {
+            // Get the inserted bill ID
+            $billId = mysqli_insert_id($connection);
+
+            // Insert records into the issued table for each item
+            $addedItems = $_POST['items'];
+            $quantities = $_POST['quantity'];
+
+            foreach ($addedItems as $index => $itemCode) {
+                $quantity = $quantities[$index];
+                $marketPrice = getMarketPrice($connection, $itemCode);
+                $price = $quantity * $marketPrice;
+
+                $insertIssuedQuery = "INSERT INTO issued (itemCode, billCode, itemName, quantity, price) VALUES ('$itemCode', '$billCode', (SELECT itemName FROM inventory WHERE itemCode = '$itemCode'), '$quantity', '$price')";
+
+                mysqli_query($connection, $insertIssuedQuery);
+            }
+
+            echo "Records inserted successfully.";
+        } else {
+            echo "Error inserting records: " . mysqli_error($connection);
+        }
+    }
+}
+
+mysqli_close($connection);
+?>
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +110,6 @@ if (!$connection) {
     <title>Table - Brand</title>
     <link rel="stylesheet" href="assets/bootstrap1.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <!-- <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css"> -->
     <script src="https://kit.fontawesome.com/961768b1ec.js" crossorigin="anonymous"></script>
 </head>
 
@@ -36,11 +122,18 @@ if (!$connection) {
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a><a class="nav-link" href="profile.html"><i class="fas fa-cubes"></i><span>Inventory</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="untitled.html"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a><a class="nav-link" href="index.html"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a><a class="nav-link" href="login.html"><i class="fas fa-archive"></i><span>Return</span></a><a class="nav-link" href="untitled.html"><i class="fas fa-table" style="font-size: 15px;"></i><span>Bill</span></a><a class="nav-link active" href="table.html"><i class="fas fa-newspaper" style="font-size: 16px;"></i><span>Add Bill</span></a><a class="nav-link" href="index.html"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a><a class="nav-link" href="index.html"><i class="fas fa-file-invoice" style="font-size: 16px;"></i><span>Refund</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="login.html"><i class="fas fa-sign-in-alt"></i><span>LogOut</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="untitled-3.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin_scaffolding.php"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a>
+                    <li class="nav-item"><a class="nav-link" href="invetory.php"><i class="fas fa-cubes"></i><span>Inventory</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="customer.php"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a>
+                    <li class="nav-item"><a class="nav-link" href="issued.php"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a>
+                    <li class="nav-item"><a class="nav-link" href="return.php"><i class="fas fa-archive"></i><span>Return</span></a>
+                    <li class="nav-item"><a class="nav-link" href="bill.php"><i class="fas fa-table" style="font-size: 15px;"></i><span>Bill</span></a>
+                    <li class="nav-item"><a class="nav-link active" href="bill_add.php"><i class="fas fa-newspaper" style="font-size: 16px;"></i><span>Add Bill</span></a>
+                    <li class="nav-item"><a class="nav-link" href="payment.php"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a>
+                    <li class="nav-item"><a class="nav-link" href="refund.php"><i class="fas fa-file-invoice" style="font-size: 16px;"></i><span>Refund</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="scaffolding_login.php"><i class="fas fa-sign-in-alt"></i><span>LogOut</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="settings.php"><i class="fas fa-cog"></i><span>Settings</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -152,9 +245,11 @@ if (!$connection) {
                         <form method="post">
                             <div class="mb-3">
                                 <div class="row">
-                                    <div class="col-lg-9"><label class="form-label">Item Name List</label>
+                                    <div class="col-lg-9">
+                                        <label class="form-label">Item Name List</label>
+                                        <input class="form-control" type="text" id="search-bar" placeholder="Search for items" style="margin-bottom: 7px;padding-bottom: 3px;margin-top: 5px;">
                                         <?php
-                                        $query = "SELECT itemName FROM inventory";
+                                        $query = "SELECT itemCode,itemName FROM inventory";
                                         $result = mysqli_query($connection, $query);
 
                                         // Check if the query was successful
@@ -164,13 +259,16 @@ if (!$connection) {
 
                                             // Loop through the results and create an <option> element for each item name
                                             while ($row = mysqli_fetch_assoc($result)) {
+                                                $itemCode = $row['itemCode'];
                                                 $itemName = $row['itemName'];
-                                                echo '<option value="' . $itemName . '">' . $itemName . '</option>';
+                                                echo '<option value="' . $itemCode . '">' . $itemName . '</option>';
                                             }
                                             echo '</select>
                                          </div>
                                          <div class="col">
-                                          <a class="btn btn-primary btn-circle ms-1" role="button" style="margin-top: 28px;"><i class="fas fa-plus text-white"></i></a>
+                                         <button class="btn btn-primary btn-icon-split" id="add-item-btn" type="button" style="margin-top: 38px;">
+                                         <span class="text-white text">Add Item</span>
+                                        </button>
                                          </div>
                                       </div>';
   
@@ -178,31 +276,19 @@ if (!$connection) {
                                             echo 'No items found in the inventory.';
                                         }
 
-                                        // Close the database connection
-                                        mysqli_close($connection);
+                                      
+                                        // mysqli_close($connection);
                                         ?>
-
-                                        <!-- <select class="form-select" name="items">
-                                            <option value="undefined">Item 1</option>
-                                            <option value="14">Item 2</option>
-                                        </select>
-                                    </div> -->
-                                        <!-- <div class="col">
-                                            <a class="btn btn-primary btn-circle ms-1" role="button" style="margin-top: 28px;"><i class="fas fa-plus text-white"></i></a>
-                                        </div> -->
-                                    <!-- </div> -->
                                 </div>
                                 <div class="row">
-                                    <div class="col"><label class="form-label">Item Code</label><input class="form-control" type="text" id="name-1" name="itemCode" maxlength="200" required="" placeholder="Item Code"></div>
-                                    <div class="col"><label class="form-label">Item Name</label><input class="form-control" type="text" id="name-2" name="itemName" maxlength="12" required="" placeholder="Item Name" minlength="12"></div>
-                                    <div class="col"><label class="form-label">Quantity</label><input class="form-control" type="number" name="quantity"></div>
-                                    <div class="col"><label class="form-label">Price</label><input class="form-control" type="number" name="price"></div>
+                                <div id="added-items-container"></div>
                                 </div>
+                                <div id="added-items-container"></div> <!-- Container to hold the added items -->
                                 <div class="mb-3"></div>
                                 <div class="mb-3"></div>
-                                <div class="mb-3"><label class="form-label">Total Amount</label><input class="form-control" type="number" name="totalAmount"></div>
-                                <div class="mb-3"><label class="form-label">Paid Amount</label><input class="form-control" type="number" name="paidAmount"></div>
-                                <div class="mb-3"><label class="form-label">Remaining Amount</label><input class="form-control" type="number" name="remaningAmount"></div>
+                                <div class="mb-3" style="margin-bottom: 15px;"><label class="form-label">Total Amount</label><input class="form-control" type="number" name="totalAmount" id="totalAmount" readonly></div>
+                                <div class="mb-3"><label class="form-label">Paid Amount</label><input class="form-control" type="number" name="paidAmount" oninput="calculateRemainingAmount()"></div>
+                                <div class="mb-3"><label class="form-label">Remaining Amount</label><input class="form-control" type="number" name="remainingAmount" id="remainingAmount" readonly></div>
                                 <div class="mb-3"><label class="form-label">Payment Status</label><select class="form-select" name="paymentStatus">
                                         <option value="undefined">Paid</option>
                                         <option value="undefined">Partially Paid</option>
@@ -210,11 +296,38 @@ if (!$connection) {
                                     </select></div>
                                 <div class="mb-3">
                                     <div class="row">
-                                        <div class="col-lg-10"><label class="form-label">Customer Name</label><select class="form-select" name="customerName" required="">
-                                                <option value="undefined" selected="">Customer1</option>
-                                            </select></div>
-                                        <div class="col"><a class="btn btn-primary btn-icon-split" role="button" style="margin-top: 28px;"><span class="text-white text">Enter</span></a></div>
-                                    </div>
+                                        <div class="col-lg-10"><label class="form-label">Customer Name</label>
+                                            <input class="form-control" type="text" id="search-bar-customer" placeholder="Search for customers" style="margin-bottom: 7px;padding-bottom: 3px;margin-top: 5px;">
+                                        <?php
+                                        $query = "SELECT customerCode,customerName FROM customer";
+                                        $result = mysqli_query($connection, $query);
+
+                                        // Check if the query was successful
+                                        if ($result && mysqli_num_rows($result) > 0) {
+                                            // Start the <select> element
+                                            echo '<select class="form-select" name="customerName" id="customer-select">';
+
+                                            // Loop through the results and create an <option> element for each item name
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                $customerCode = $row['customerCode'];
+                                                $customerName = $row['customerName'];
+                                                echo '<option value="' . $customerCode . '">' . $customerName . '</option>';
+                                            }
+                                            echo '</select>
+                                         </div>
+                                         <div class="col">
+                                         <button class="btn btn-primary btn-icon-split" id="add-customer-btn" type="button" style="margin-top: 38px;">
+                                         <span class="text-white text">Add Customer</span>
+                                        </button>
+                                         </div>
+                                      </div>';
+  
+                                        } else {
+                                            echo 'No customer found in the  customer table.';
+                                        }
+                                      
+                                        mysqli_close($connection);
+                                        ?>
                                 </div>
                                 <div class="mb-3"><label class="form-label">Customer Code</label><input class="form-control" type="text" name="customerCode" placeholder="Customer Code"></div>
                                 <div class="mb-3"><label class="form-label">Bill Code</label><input class="form-control" type="text" name="billCode" placeholder="Bill Code"></div>
@@ -239,6 +352,166 @@ if (!$connection) {
     <script src="assets/bootstrap1.min.js"></script>
     <script src="assets/bs-init1.js"></script>
     <script src="assets/theme1.js"></script>
+</body>
+<script>
+    var searchBar = document.getElementById('search-bar');
+    var itemSelect = document.getElementById('item-select');
+    var originalOptions = Array.from(itemSelect.options);
+
+    searchBar.addEventListener('input', function(event) {
+        var searchTerm = event.target.value.toLowerCase();
+
+        // Reset the select options
+        itemSelect.innerHTML = '';
+
+        // Filter the original options based on the search term
+        var filteredOptions = originalOptions.filter(function(option) {
+            var optionText = option.text.toLowerCase();
+            return optionText.startsWith(searchTerm);
+        });
+
+        // Append the filtered options to the select element
+        filteredOptions.forEach(function(option) {
+            itemSelect.appendChild(option.cloneNode(true));
+        });
+    });
+
+    var addItemBtn = document.getElementById('add-item-btn');
+    var addedItemsContainer = document.getElementById('added-items-container');
+    var totalAmountInput = document.getElementById('totalAmount');
+
+    addItemBtn.addEventListener('click', function() {
+        var itemSelect = document.getElementById('item-select');
+        var selectedItemCode = itemSelect.value;
+        var selectedItemName = itemSelect.options[itemSelect.selectedIndex].text;
+
+        // Make an AJAX request to get the market price dynamically
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var marketPrice = parseFloat(xhr.responseText);
+
+                    var newItemContainer = document.createElement('div');
+                    newItemContainer.className = 'row added-item';
+                    newItemContainer.innerHTML = `
+                        <div class="col" style="margin-bottom: 30px;">
+                            <label class="form-label">Item Code</label>
+                            <input class="form-control" type="text" value="${selectedItemCode}" readonly>
+                        </div>  
+                        <div class="col" style="margin-bottom: 15px;">
+                            <label class="form-label">Item Name</label>
+                            <input class="form-control" type="text" value="${selectedItemName}" readonly>
+                        </div> 
+                        <div class="col" style="margin-bottom: 15px;">
+                            <label class="form-label">Quantity</label>
+                            <input class="form-control" type="number" name="quantity" oninput="calculatePrice(this)">
+                        </div>  
+                        <div class="col" style="margin-bottom: 15px;">
+                            <label class="form-label">Price</label>
+                            <input class="form-control" type="number" name="price" readonly data-market-price="${marketPrice}">
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-danger btn-circle ms-1" type="button" style="margin-top: 29px;" onclick="deleteItem(this)"><i class="fas fa-trash text-white"></i></button>
+                        </div>
+                    `;
+
+                    addedItemsContainer.appendChild(newItemContainer);
+                } else {
+                    console.log('Error: ' + xhr.status);
+                }
+            }
+        };
+
+        xhr.open('GET', 'get_market_price.php?itemCode=' + selectedItemCode, true);
+        xhr.send();
+    });
+
+    function deleteItem(element) {
+        var row = element.closest('.added-item');
+        row.remove();
+        calculateTotalAmount();
+    }
+
+    function calculatePrice(input) {
+        var quantity = input.value;
+        var priceInput = input.parentElement.nextElementSibling.querySelector('input[name="price"]');
+        var marketPrice = parseFloat(priceInput.dataset.marketPrice);
+
+        if (!isNaN(quantity) && !isNaN(marketPrice)) {
+            var calculatedPrice = quantity * marketPrice;
+            // Update the price input with the calculated price
+            priceInput.value = calculatedPrice.toFixed(2);
+
+            calculateTotalAmount();
+        }
+    }
+
+    function calculateTotalAmount() {
+        var totalPrice = 0;
+        var priceInputs = addedItemsContainer.querySelectorAll('input[name="price"]');
+
+        // Calculate the total price by summing up all the item prices
+        priceInputs.forEach(function(input) {
+            var price = parseFloat(input.value);
+            if (!isNaN(price)) {
+                totalPrice += price;
+            }
+        });
+
+        // Update the total amount input with the calculated total price
+        totalAmountInput.value = totalPrice.toFixed(2);
+ calculateRemainingAmount();
+    }
+function calculateRemainingAmount() {
+    var totalAmount = parseFloat(totalAmountInput.value);
+    var paidAmount = parseFloat(document.getElementsByName('paidAmount')[0].value); // Parse paidAmount as float
+    var remainingAmountInput = document.getElementById('remainingAmount');
+    var remainingAmount = totalAmount - paidAmount;
+    remainingAmountInput.value = remainingAmount.toFixed(2);
+}
+</script>
+
+<script>
+    var searchBarCustomer = document.getElementById('search-bar-customer');
+    var customerSelect = document.getElementById('customer-select');
+    var originalOptions = Array.from(customerSelect.options);
+
+    searchBarCustomer.addEventListener('input', function(event) {
+        var searchTerm = event.target.value.toLowerCase();
+
+        // Reset the select options
+        customerSelect.innerHTML = '';
+
+        // Filter the original options based on the search term
+        var filteredOptions = originalOptions.filter(function(option) {
+            var optionText = option.text.toLowerCase();
+            return optionText.startsWith(searchTerm);
+        });
+
+        // Append the filtered options to the select element
+        filteredOptions.forEach(function(option) {
+            customerSelect.appendChild(option.cloneNode(true));
+        });
+    });
+
+    var addCustomerBtn = document.getElementById('add-customer-btn');
+    var addedCustomerContainer = document.getElementById('added-customers-container');
+
+    addCustomerBtn.addEventListener('click', function() {
+        var customerSelect = document.getElementById('customer-select');
+        var selectedCustomerCode = customerSelect.value;
+
+        // Retrieve the selected customer name
+        var selectedCustomerName = customerSelect.options[customerSelect.selectedIndex].text;
+
+        // Add the customer code to the input field
+        var customerCodeInput = document.getElementsByName('customerCode')[0];
+        customerCodeInput.value = selectedCustomerCode;
+    });
+</script>
+
+
 </body>
 
 </html>
