@@ -41,30 +41,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $dueDate = $_POST['dueDate'];
         $remaningAmount = $_POST['remaningAmount'];
 
-        $insertBillQuery = "INSERT INTO bill (billCode, customerCode, billDate, totalAmount, paymentStatus, dueDate,remaningAmount) VALUES ('$billCode', '$customerCode', '$billDate', '$totalAmount', '$paymentStatus', '$dueDate','$remaningAmount')";
+        $insertBillQuery = "INSERT INTO bill (billCode, customerCode, billDate, totalAmount, paymentStatus, dueDate,remaningAmount) VALUES ('$billCode', '$customerCode', '$billDate', '$totalAmount', '$paymentStatus', '$dueDate', '$remaningAmount')";
         if (mysqli_query($connection, $insertBillQuery)) {
             // Get the inserted bill ID
             $billId = mysqli_insert_id($connection);
 
             // Insert records into the issued table for each item
-            // Insert records into the issued table for each item
-            $addedItems = $_POST['items'];
+            $addedItems = $_POST['itemCode'];
             $quantities = $_POST['quantity'];
 
-            // Convert the addedItems and quantities to arrays if they are not already
-            if (!is_array($addedItems)) {
-                $addedItems = [$addedItems];
-            }
-            if (!is_array($quantities)) {
-                $quantities = [$quantities];
-            }
             for ($i = 0; $i < count($addedItems); $i++) {
                 $itemCode = $addedItems[$i];
                 $quantity = $quantities[$i];
                 $marketPrice = getMarketPrice($connection, $itemCode);
                 $price = $quantity * $marketPrice;
 
-                $insertIssuedQuery = "INSERT INTO issued (billCode, itemCode, itemName, quantity, price) VALUES ('$billCode', '$itemCode', (SELECT itemName FROM inventory WHERE itemCode = '$itemCode'), '$quantity', '$price')";
+                $itemName = mysqli_real_escape_string($connection, $_POST['itemName'][$i]);
+
+                $insertIssuedQuery = "INSERT INTO issued (billCode, itemCode, itemName, quantity, price) VALUES ('$billCode', '$itemCode', '$itemName', '$quantity', '$price')";
 
                 mysqli_query($connection, $insertIssuedQuery);
             }
@@ -75,7 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-             
+
+// Close the database connection
 // mysqli_close($connection);
 ?>
 
@@ -373,19 +368,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     newItemContainer.innerHTML = `
                         <div class="col" style="margin-bottom: 30px;">
                             <label class="form-label">Item Code</label>
-                            <input class="form-control" type="text" name="itemCode" value="${selectedItemCode}" readonly>
+                            <input class="form-control" type="text" name="itemCode[]" value="${selectedItemCode}" readonly>
                         </div>  
                         <div class="col" style="margin-bottom: 15px;">
                             <label class="form-label">Item Name</label>
-                            <input class="form-control" type="text" name="itemName" value="${selectedItemName}" readonly>
+                            <input class="form-control" type="text" name="itemName[]" value="${selectedItemName}" readonly>
                         </div> 
                         <div class="col" style="margin-bottom: 15px;">
                             <label class="form-label">Quantity</label>
-                            <input class="form-control" type="number" name="quantity" oninput="calculatePrice(this)">
+                            <input class="form-control" type="number" name="quantity[]" oninput="calculatePrice(this)">
                         </div>  
                         <div class="col" style="margin-bottom: 15px;">
                             <label class="form-label">Price</label>
-                            <input class="form-control" type="number" name="price" readonly data-market-price="${marketPrice}">
+                            <input class="form-control" type="number" name="price[]" readonly data-market-price="${marketPrice}">
                         </div>
                         <div class="col">
                             <button class="btn btn-danger btn-circle ms-1" type="button" style="margin-top: 29px;" onclick="deleteItem(this)"><i class="fas fa-trash text-white"></i></button>
@@ -411,7 +406,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     function calculatePrice(input) {
         var quantity = input.value;
-        var priceInput = input.parentElement.nextElementSibling.querySelector('input[name="price"]');
+        var priceInput = input.parentElement.nextElementSibling.querySelector('input[name="price[]"]');
         var marketPrice = parseFloat(priceInput.dataset.marketPrice);
 
         if (!isNaN(quantity) && !isNaN(marketPrice)) {
@@ -425,7 +420,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     function calculateTotalAmount() {
         var totalPrice = 0;
-        var priceInputs = addedItemsContainer.querySelectorAll('input[name="price"]');
+        var priceInputs = addedItemsContainer.querySelectorAll('input[name="price[]"]');
 
         // Calculate the total price by summing up all the item prices
         priceInputs.forEach(function(input) {
