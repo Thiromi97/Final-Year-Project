@@ -22,50 +22,64 @@ function getMarketPrice($connection, $itemCode)
     return $row['marketPrice'];
 }
 
+// Initialize variables for messages
+$successMessage = '';
+$errorMessage = '';
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $billCode = $_POST['billCode'];
+    $paymentCode = $_POST['paymentCode'];
 
-    // Check if the billCode already exists in the bill table
-    $checkQuery = "SELECT * FROM bill WHERE billCode = '$billCode'";
-    $checkResult = mysqli_query($connection, $checkQuery);
+    $checkPayment = "SELECT * FROM payment WHERE paymentCode = '$paymentCode'";
+    $checkAnsw = mysqli_query($connection, $checkPayment);
 
-    if (mysqli_num_rows($checkResult) > 0) {
-        echo "Bill with the same billCode already exists.";
+    if (mysqli_num_rows($checkAnsw) > 0) {
+        $errorMessage = "Payment with the same paymentCode already exists.";
     } else {
-        // Insert record into the bill table
-        $customerCode = $_POST['customerCode'];
-        $billDate = $_POST['billDate'];
-        $totalAmount = $_POST['totalAmount'];
-        $paymentStatus = $_POST['paymentStatus'];
-        $dueDate = $_POST['dueDate'];
-        $remaningAmount = $_POST['remaningAmount'];
+        $checkQuery = "SELECT * FROM bill WHERE billCode = '$billCode'";
+        $checkResult = mysqli_query($connection, $checkQuery);
 
-        $insertBillQuery = "INSERT INTO bill (billCode, customerCode, billDate, totalAmount, paymentStatus, dueDate,remaningAmount) VALUES ('$billCode', '$customerCode', '$billDate', '$totalAmount', '$paymentStatus', '$dueDate', '$remaningAmount')";
-        if (mysqli_query($connection, $insertBillQuery)) {
-            // Get the inserted bill ID
-            $billId = mysqli_insert_id($connection);
-
-            // Insert records into the issued table for each item
-            $addedItems = $_POST['itemCode'];
-            $quantities = $_POST['quantity'];
-
-            for ($i = 0; $i < count($addedItems); $i++) {
-                $itemCode = $addedItems[$i];
-                $quantity = $quantities[$i];
-                $marketPrice = getMarketPrice($connection, $itemCode);
-                $price = $quantity * $marketPrice;
-
-                $itemName = mysqli_real_escape_string($connection, $_POST['itemName'][$i]);
-
-                $insertIssuedQuery = "INSERT INTO issued (billCode, itemCode, itemName, quantity, price) VALUES ('$billCode', '$itemCode', '$itemName', '$quantity', '$price')";
-
-                mysqli_query($connection, $insertIssuedQuery);
-            }
-
-            echo "Records inserted successfully.";
+        if (mysqli_num_rows($checkResult) > 0) {
+            $errorMessage = "Bill with the same billCode already exists.";
         } else {
-            echo "Error inserting records: " . mysqli_error($connection);
+            // Insert record into the bill table
+            $customerCode = $_POST['customerCode'];
+            $billDate = $_POST['billDate'];
+            $totalAmount = $_POST['totalAmount'];
+            $paymentStatus = $_POST['paymentStatus'];
+            $dueDate = $_POST['dueDate'];
+            $remaningAmount = $_POST['remaningAmount'];
+            $paidAmount = $_POST['paidAmount'];
+
+            $insertBillQuery = "INSERT INTO bill (billCode, customerCode, billDate, totalAmount, paymentStatus, dueDate, remaningAmount) VALUES ('$billCode', '$customerCode', '$billDate', '$totalAmount', '$paymentStatus', '$dueDate', '$remaningAmount')";
+            if (mysqli_query($connection, $insertBillQuery)) {
+                // Get the inserted bill ID
+                $billId = mysqli_insert_id($connection);
+
+                // Insert records into the issued table for each item
+                $addedItems = $_POST['itemCode'];
+                $quantities = $_POST['quantity'];
+
+                for ($i = 0; $i < count($addedItems); $i++) {
+                    $itemCode = $addedItems[$i];
+                    $quantity = $quantities[$i];
+                    $marketPrice = getMarketPrice($connection, $itemCode);
+                    $price = $quantity * $marketPrice;
+
+                    $itemName = mysqli_real_escape_string($connection, $_POST['itemName'][$i]);
+
+                    $insertIssuedQuery = "INSERT INTO issued (billCode, itemCode, itemName, quantity, price) VALUES ('$billCode', '$itemCode', '$itemName', '$quantity', '$price')";
+
+                    mysqli_query($connection, $insertIssuedQuery);
+                }
+
+                $insertPaymentQuery = "INSERT INTO payment (paymentCode, billCode, customerCode, paymentDate, paymentAmount, isRefund) VALUES ('$paymentCode', '$billCode', '$customerCode', '$billDate', '$paidAmount', 'No')";
+                mysqli_query($connection, $insertPaymentQuery);
+                $successMessage = "Records inserted successfully.";
+            } else {
+                $errorMessage = "Error inserting records: " . mysqli_error($connection);
+            }
         }
     }
 }
@@ -74,13 +88,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 // mysqli_close($connection);
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Table - Brand</title>
+    <title>Bill Add</title>
     <link rel="stylesheet" href="assets/bootstrap1.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <script src="https://kit.fontawesome.com/961768b1ec.js" crossorigin="anonymous"></script>
@@ -97,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="admin_scaffolding.php"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a>
-                    <li class="nav-item"><a class="nav-link" href="invetory.php"><i class="fas fa-cubes"></i><span>Inventory</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="inventory.php"><i class="fas fa-cubes"></i><span>Inventory</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="customer.php"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a>
                     <li class="nav-item"><a class="nav-link" href="issued.php"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a>
                     <li class="nav-item"><a class="nav-link" href="return.php"><i class="fas fa-archive"></i><span>Return</span></a>
@@ -265,7 +280,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                             <option value="Paid">Paid</option>
                                             <option value="Partially Paid">Partially Paid</option>
                                             <option value="Unpaid">Unpaid</option>
-                                        </select></div>
+                                        </select>
+                                    </div>
                                     <div class="mb-3">
                                         <div class="row">
                                             <div class="col-lg-10"><label class="form-label">Customer Name</label>
@@ -302,6 +318,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                             </div>
                                             <div class="mb-3"><label class="form-label">Customer Code</label><input class="form-control" type="text" name="customerCode" placeholder="Customer Code"></div>
                                             <div class="mb-3"><label class="form-label">Bill Code</label><input class="form-control" type="text" name="billCode" placeholder="Bill Code"></div>
+                                            <div class="mb-3"><label class="form-label">Payment Code</label><input class="form-control" type="text" name="paymentCode" placeholder="Payment Code"></div>
                                             <div class="mb-3"><label class="form-label">Bill Date</label><input class="form-control" type="date" name="billDate"></div>
                                             <div class="mb-3"><label class="form-label">Due Date</label><input class="form-control" type="date" name="dueDate"></div>
                                             <div>
@@ -310,6 +327,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                                 </div>
                                             </div>
                         </form>
+                        <?php
+                    // Print the success or error messages
+                    if (!empty($successMessage)) {
+                        echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                    }
+                    if (!empty($errorMessage)) {
+                        echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                    }
+                    ?>
                     </div>
                 </div>
             </div>

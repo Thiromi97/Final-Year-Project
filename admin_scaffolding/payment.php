@@ -1,3 +1,31 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "scaffolding";
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+$rowsPerPage = 10;
+$page = 1;
+
+if (isset($_GET['rowsPerPage'])) {
+    $rowsPerPage = $_GET['rowsPerPage'];
+}
+
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
+
+$offset = ($page - 1) * $rowsPerPage;
+
+$sql = "SELECT * FROM payment LIMIT $rowsPerPage OFFSET $offset";
+$result = mysqli_query($conn, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -139,15 +167,24 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                        <label class="form-label">Show&nbsp;
+                                        <select class="d-inline-block form-select form-select-sm" onchange="location.href = '?rowsPerPage=' + this.value;">
+                                                <option value="10" <?php if ($rowsPerPage == 10) echo "selected"; ?>>10</option>
+                                                <option value="25" <?php if ($rowsPerPage == 25) echo "selected"; ?>>25</option>
+                                                <option value="50" <?php if ($rowsPerPage == 50) echo "selected"; ?>>50</option>
+                                                <option value="100"<?php if ($rowsPerPage == 100) echo "selected"; ?>>100</option>
+                                            </select>&nbsp;</label>
+                                        </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                                <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                        <form method="GET" action="payment_search.php">
+                                        <label class="form-label">
+                                            <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Bill Code" name="billCode">
+                                        </label>
+                                        <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
@@ -159,26 +196,33 @@
                                             <th>Customer Code</th>
                                             <th>Payment Date</th>
                                             <th>Payment Amount</th>
-                                            <th>Payment Method</th>
                                             <th>Is Refund</th>
                                             <th>Invoice</th>
                                             <th></th>
-                                            <th><a class="btn btn-primary btn-circle ms-1" role="button"><i class="fas fa-plus text-white" style="font-size: 17px;"></i></a></th>
-                                        </tr>
+                                            <th><a id="add-item-btn" class="btn btn-primary btn-circle ms-1" role="button" href="payment_add.php"><i class="fas fa-plus text-white" style="font-size: 17pbx;"></i></a></th>
+                                            <!-- <th><a class="btn btn-primary btn-circle ms-1" role="button"><i class="fas fa-plus text-white" style="font-size: 17px;"></i></a></th>
+                                        </tr> -->
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td>2012/03/29<br></td>
-                                            <td>$433,060</td>
-                                            <td>Yes</td>
-                                            <td><a class="btn btn-warning btn-circle ms-1" role="button"><i class="fas fa-file-invoice-dollar text-white" style="font-size: 17px;"></i></a></td>
-                                            <td><a class="btn btn-success btn-circle ms-1" role="button"><i class="fas fa-pencil-alt text-white"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white"></i></a></td>
-                                        </tr>
+                                    <?php while ($row = mysqli_fetch_assoc($result)) {
+                                         echo "<tr> 
+                                                <td>" . $row["billCode"] . "</td>
+                                                <td>" . $row["customerCode"] . "</td>
+                                                <td>" . $row["paymentDate"] . "</td>
+                                                <td>" . $row["paymentAmount"] . "</td>
+                                                <td>" . $row["isRefund"] . "</td>
+                                                <td>
+                                                <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code='" . $row["paymentCode"] . "' role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
+                                                <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
+                                                </button>
+                                                </td>
+                                                <td>
+                                                <button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["customerCode"] . "'>
+                                                    <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
+                                                </button>
+                                                </td>
+                                                </tr>";
+                                                                                   } ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -187,7 +231,7 @@
                                             <td><strong>Customer Code</strong></td>
                                             <td><strong>Payment Date</strong></td>
                                             <td><strong>Payment Amount</strong></td>
-                                            <td><strong>Payment Method</strong></td>
+                                            <!-- <td><strong>Payment Method</strong></td> -->
                                             <td><strong>Is Refund</strong></td>
                                             <td><strong>Invoice</strong></td>
                                         </tr>
