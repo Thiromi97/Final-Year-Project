@@ -199,25 +199,28 @@ $result = mysqli_query($conn, $sql);
                                             <th>Is Refund</th>
                                             <th>Invoice</th>
                                             <th></th>
-                                            <th><a id="add-item-btn" class="btn btn-primary btn-circle ms-1" role="button" href="payment_add.php"><i class="fas fa-plus text-white" style="font-size: 17pbx;"></i></a></th>
+                                            <!-- <th><a id="add-item-btn" class="btn btn-primary btn-circle ms-1" role="button" href="payment_add.php"><i class="fas fa-plus text-white" style="font-size: 17pbx;"></i></a></th> -->
                                             <!-- <th><a class="btn btn-primary btn-circle ms-1" role="button"><i class="fas fa-plus text-white" style="font-size: 17px;"></i></a></th>
                                         </tr> -->
                                     </thead>
                                     <tbody>
                                     <?php while ($row = mysqli_fetch_assoc($result)) {
                                          echo "<tr> 
+                                                <td>" . $row["paymentCode"] . "</td>
                                                 <td>" . $row["billCode"] . "</td>
                                                 <td>" . $row["customerCode"] . "</td>
                                                 <td>" . $row["paymentDate"] . "</td>
                                                 <td>" . $row["paymentAmount"] . "</td>
                                                 <td>" . $row["isRefund"] . "</td>
+                                                <td><a class='btn btn-warning btn-circle ms-1' role='button' href='generate_invoice.php?paymentCode=" . $row["paymentCode"] . "' target='_blank'><i class='fas fa-file-invoice-dollar text-white' style='font-size: 17px;'></i></a>
+                                                </td>
                                                 <td>
                                                 <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code='" . $row["paymentCode"] . "' role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
                                                 <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
                                                 </button>
                                                 </td>
                                                 <td>
-                                                <button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["customerCode"] . "'>
+                                                <button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["paymentCode"] . "'>
                                                     <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
                                                 </button>
                                                 </td>
@@ -242,13 +245,29 @@ $result = mysqli_query($conn, $sql);
                                 <div class="col-md-6 align-self-center"></div>
                                 <div class="col-md-6">
                                     <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
-                                        </ul>
+                                    <ul class="pagination">
+                                    <?php
+                                            // Get the total number of records
+                                            $sql = "SELECT COUNT(*) AS count FROM payment";
+                                            $result_count = mysqli_query($conn, $sql);
+                                            $row_count = mysqli_fetch_assoc($result_count);
+                                            $totalRecords = $row_count['count'];
+
+                                            // Calculate the total number of pages
+                                            $totalPages = ceil($totalRecords / $rowsPerPage);
+
+                                            $prevDisabled = ($page == 1) ? "disabled" : "";
+                                            $nextDisabled = ($page == $totalPages) ? "disabled" : "";
+                                            echo '<li class="page-item ' . $prevDisabled . '"><a class="page-link" aria-label="Previous" href="?rowsPerPage=' . $rowsPerPage . '&page=' . ($page - 1) . '"><span aria-hidden="true">«</span></a></li>';
+                                            // Generate pagination links
+                                            for ($i = 1; $i <= $totalPages; $i++) {
+                                                $activeClass = ($page == $i) ? "active" : "";
+                                                echo '<li class="page-item ' . $activeClass . '"><a class="page-link" href="?rowsPerPage=' . $rowsPerPage . '&page=' . $i . '">' . $i . '</a></li>';
+                                            }
+                                            echo '<li class="page-item ' . $nextDisabled . '"><a class="page-link" aria-label="Next" href="?rowsPerPage=' . $rowsPerPage . '&page=' . ($page + 1) . '"><span aria-hidden="true">»</span></a></li>';
+
+                                            ?>
+                                    </ul>
                                     </nav>
                                 </div>
                             </div>
@@ -267,5 +286,55 @@ $result = mysqli_query($conn, $sql);
     <script src="assets/bs-init1.js"></script>
     <script src="assets/theme1.js"></script>
 </body>
+
+
+<script>
+    // Get a reference to all the edit buttons
+    const editButtons = document.querySelectorAll('.edit-item-btn');
+
+    // Add a click event listener to each edit button
+    editButtons.forEach(function(editButton) {
+        editButton.addEventListener('click', function(event) {
+            // Prevent the default behavior of the link
+            event.preventDefault();
+
+            // Get the paymentCode of the item that needs to be edited
+            const paymentCode = editButton.getAttribute('data-item-code');
+
+            // Calculate the position of the popup window
+            const width = 600;
+            const height = 400;
+            const left = (screen.width / 2) - (width / 2);
+            const top = (screen.height / 2) - (height / 2);
+
+            // Open the popup window with the payment_edit.php page and pass the paymentCode in the URL
+            window.open(`payment_edit.php?paymentCode=${paymentCode}`, 'Popup Window', `width=${width},height=${height},left=${left},top=${top}`);
+        });
+    });
+</script>
+
+<script>
+    // Get a reference to all the delete buttons
+    const deleteButtons = document.querySelectorAll('.delete-item-btn');
+
+    // Add a click event listener to each delete button
+    deleteButtons.forEach(function(deleteButton) {
+        deleteButton.addEventListener('click', function(event) {
+            // Prevent the default behavior of the button
+            event.preventDefault();
+
+            // Get the paymentCode of the item that needs to be deleted
+            const paymentCode = deleteButton.getAttribute('data-item-code');
+
+            // Show a confirmation dialog box
+            const confirmed = confirm('Are you sure you want to delete this record?');
+
+            // If the user clicked "OK", delete the record
+            if (confirmed) {
+                window.location.href = `payment_delete.php?paymentCode=${paymentCode}`;
+            }
+        });
+    });
+</script>
 
 </html>

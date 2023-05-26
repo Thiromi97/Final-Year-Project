@@ -75,7 +75,6 @@ if (isset($_GET['customerCode'])) {
                                         <option value="Yes" <?php if ($blackListed == 'Yes') echo 'selected'; ?>>Yes</option>
                                     </select>
                                 </div>
-                                <div>
                                 <div class="row row-cols-sm-2">
                                         <div class="col"><button class="btn btn-primary" type="submit" name="blackList" style="margin: 0px;">BlackListed</button></div>
                                         <div class="col"><a class="btn btn-primary" href='customer.php'>Cancel</a></div>

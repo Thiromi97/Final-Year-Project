@@ -507,7 +507,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         customerCodeInput.value = selectedCustomerCode;
     });
 </script>
-
-
 </body>
 </html>
