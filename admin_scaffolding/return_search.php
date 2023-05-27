@@ -1,3 +1,39 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "scaffolding";
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_GET['returnId'])) {
+    $returnId = trim($_GET['returnId']);
+    $sql = "SELECT * FROM returned WHERE returnId = '$returnId'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $billCode = $row["billCode"];
+        $itemCode = $row["itemCode"];
+        $returnQuantity = $row["returnQuantity"];
+        $totalPrice = $row["totalPrice"];
+        $returnDate = $row["returnDate"];
+    } else {
+        $returnId = 'No Data Found';
+        $billCode = 'No Data Found';
+        $itemCode = 'No Data Found';
+        $returnQuantity = 'No Data Found';
+        $totalPrice = 'No Data Found';
+        $returnDate = 'No Data Found';
+    }
+} else {
+    header("Location: return.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -153,13 +189,21 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>ZAA</td>
-                                            <td>scaffolding</td>
-                                            <td>Supplies</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
+                                        <td><?php echo $returnId; ?></td>
+                                            <td><?php echo $billCode;?></td>
+                                            <td><?php echo $itemCode; ?></td>
+                                            <td><?php echo $returnQuantity; ?></td>
+                                            <td><?php echo $returnDate; ?></td>
+                                            <td>
+                                                <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code="<?php echo $row['returnId']; ?>"  role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
+                                                    <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code="<?php echo $row['returnId']; ?>">
+                                                    <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                     <tfoot>

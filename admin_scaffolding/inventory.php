@@ -209,23 +209,23 @@ $result = mysqli_query($conn, $sql);
                                     <tbody>
                                         <?php while ($row = mysqli_fetch_assoc($result)) {
                                             echo "<tr> 
-                <td>" . $row["itemCode"] . "</td>
-                <td>" . $row["itemName"] . "</td>
-                <td>" . $row["category"] . "</td>
-                <td>" . $row["purchasePrice"] . "</td>
-                <td>" . $row["marketPrice"] . "</td>
-                <td>" . $row["quantity"] . "</td>
-                <td>
-                <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code='" . $row["itemCode"] . "' role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
-        <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
-    </button>
-</td>
-<td>
-<button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["itemCode"] . "'>
-    <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
-</button>
-</td>
-            </tr>";
+                                                    <td>" . $row["itemCode"] . "</td>
+                                                    <td>" . $row["itemName"] . "</td>
+                                                    <td>" . $row["category"] . "</td>
+                                                    <td>" . $row["purchasePrice"] . "</td>
+                                                    <td>" . $row["marketPrice"] . "</td>
+                                                    <td>" . $row["quantity"] . "</td>
+                                                    <td>
+                                                    <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code='" . $row["itemCode"] . "' role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
+                                            <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                    <button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["itemCode"] . "'>
+                                        <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
+                                    </button>
+                                    </td>
+                                                </tr>";
                                         } ?>
                                     </tbody>
                                     <tfoot>

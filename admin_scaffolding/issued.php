@@ -1,3 +1,31 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "scaffolding";
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+$rowsPerPage = 10;
+$page = 1;
+
+if (isset($_GET['rowsPerPage'])) {
+    $rowsPerPage = $_GET['rowsPerPage'];
+}
+
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
+
+$offset = ($page - 1) * $rowsPerPage;
+
+$sql = "SELECT * FROM issued LIMIT $rowsPerPage OFFSET $offset";
+$result = mysqli_query($conn, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -140,15 +168,25 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
-                                                <option value="10" selected="">10</option>
-                                                <option value="25">25</option>
-                                                <option value="50">50</option>
-                                                <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
+                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                        <label class="form-label">Show&nbsp;
+                                            <select class="d-inline-block form-select form-select-sm" onchange="location.href = '?rowsPerPage=' + this.value;">
+                                                <option value="10" <?php if ($rowsPerPage == 10) echo "selected"; ?>>10</option>
+                                                <option value="25" <?php if ($rowsPerPage == 25) echo "selected"; ?>>25</option>
+                                                <option value="50" <?php if ($rowsPerPage == 50) echo "selected"; ?>>50</option>
+                                                <option value="100" <?php if ($rowsPerPage == 100) echo "selected"; ?>>100</option>
+                                            </select>&nbsp;</label>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                                    <div class="text-md-end dataTables_filter" id="dataTable_filter">
+                                        <form method="GET" action="issued_search.php">
+                                            <label class="form-label">
+                                                <input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Bill Code" name="billCode">
+                                            </label>
+                                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -161,22 +199,39 @@
                                             <th>Quantity</th>
                                             <th>Price</th>
                                             <th></th>
-                                            <th><a class="btn btn-primary btn-circle ms-1" role="button"><i class="fas fa-plus text-white" style="font-size: 17px;"></i></a></th>
+                                            <!-- <th><a class="btn btn-primary btn-circle ms-1" role="button"><i class="fas fa-plus text-white" style="font-size: 17px;"></i></a></th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>ZAA</td>
-                                            <td>scaffolding</td>
-                                            <td>Supplies</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
+                                        <?php while ($row = mysqli_fetch_assoc($result)) {
+                                            echo "<tr> 
+        <td>" . $row["itemCode"] . "</td>
+        <td>" . $row["billCode"] . "</td>
+        <td>" . $row["itemName"] . "</td>
+        <td>" . $row["quantity"] . "</td>
+        <td>" . $row["price"] . "</td>
+        <td>
+            <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code='" . $row["itemCode"] . "' data-bill-code='" . $row["billCode"] . "' role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
+                <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
+            </button>
+        </td>
+        <td>
+            <button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["itemCode"] . "' data-bill-code='" . $row["billCode"] . "'>
+                <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
+            </button>
+        </td>
+    </tr>";
+                                        } ?>
+
                                     </tbody>
                                     <tfoot>
-                                        <tr></tr>
+                                        <tr>
+                                            <td><strong>Item Code</strong></td>
+                                            <td><strong>Bill Code</strong></td>
+                                            <td><strong>Item Name</strong></td>
+                                            <td><strong>Quantity</strong></td>
+                                            <td><strong>Price</strong></td>
+                                        </tr>
                                     </tfoot>
                                 </table>
                             </div>
@@ -185,11 +240,27 @@
                                 <div class="col-md-6">
                                     <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                         <ul class="pagination">
-                                            <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
+                                            <?php
+                                            // Get the total number of records
+                                            $sql = "SELECT COUNT(*) AS count FROM issued";
+                                            $result_count = mysqli_query($conn, $sql);
+                                            $row_count = mysqli_fetch_assoc($result_count);
+                                            $totalRecords = $row_count['count'];
+
+                                            // Calculate the total number of pages
+                                            $totalPages = ceil($totalRecords / $rowsPerPage);
+
+                                            $prevDisabled = ($page == 1) ? "disabled" : "";
+                                            $nextDisabled = ($page == $totalPages) ? "disabled" : "";
+                                            echo '<li class="page-item ' . $prevDisabled . '"><a class="page-link" aria-label="Previous" href="?rowsPerPage=' . $rowsPerPage . '&page=' . ($page - 1) . '"><span aria-hidden="true">«</span></a></li>';
+                                            // Generate pagination links
+                                            for ($i = 1; $i <= $totalPages; $i++) {
+                                                $activeClass = ($page == $i) ? "active" : "";
+                                                echo '<li class="page-item ' . $activeClass . '"><a class="page-link" href="?rowsPerPage=' . $rowsPerPage . '&page=' . $i . '">' . $i . '</a></li>';
+                                            }
+                                            echo '<li class="page-item ' . $nextDisabled . '"><a class="page-link" aria-label="Next" href="?rowsPerPage=' . $rowsPerPage . '&page=' . ($page + 1) . '"><span aria-hidden="true">»</span></a></li>';
+
+                                            ?>
                                         </ul>
                                     </nav>
                                 </div>
@@ -208,5 +279,59 @@
     <script src="assets/bootstrap1.min.js"></script>
     <script src="assets/bs-init1.js"></script>
     <script src="assets/theme1.js"></script>
+
+    <script>
+        // Get a reference to all the edit buttons
+        const editButtons = document.querySelectorAll('.edit-item-btn');
+
+        // Add a click event listener to each edit button
+        editButtons.forEach(function(editButton) {
+            editButton.addEventListener('click', function(event) {
+                // Prevent the default behavior of the link
+                event.preventDefault();
+
+                // Get the paymentCode of the item that needs to be edited
+                const itemCode = editButton.getAttribute('data-item-code');
+                const billCode = editButton.getAttribute('data-bill-code');
+
+                // Calculate the position of the popup window
+                const width = 600;
+                const height = 400;
+                const left = (screen.width / 2) - (width / 2);
+                const top = (screen.height / 2) - (height / 2);
+
+                // Open the popup window with the issued_edit.php page and pass the paymentCode and billCode in the URL
+                window.open(`issued_edit.php?itemCode=${itemCode}&billCode=${billCode}`, 'Popup Window', `width=${width},height=${height},left=${left},top=${top}`);
+
+            });
+        });
+    </script>
+
+    <script>
+        // Get a reference to all the delete buttons
+        const deleteButtons = document.querySelectorAll('.delete-item-btn');
+
+        // Add a click event listener to each delete button
+        deleteButtons.forEach(function(deleteButton) {
+            deleteButton.addEventListener('click', function(event) {
+                // Prevent the default behavior of the button
+                event.preventDefault();
+
+                // Get the paymentCode of the item that needs to be deleted
+                const itemCode = deleteButton.getAttribute('data-item-code');
+                const billCode = deleteButton.getAttribute('data-bill-code');
+
+                // Show a confirmation dialog box
+                const confirmed = confirm('Are you sure you want to delete this record?');
+
+                // If the user clicked "OK", delete the record
+                if (confirmed) {
+                    window.location.href = `issued_delete.php?itemCode=${itemCode}&billCode=${billCode}`, 'Popup Window', `width=${width},height=${height},left=${left},top=${top}`;
+                }
+            });
+        });
+    </script>
+
 </body>
+
 </html>

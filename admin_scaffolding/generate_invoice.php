@@ -1,4 +1,6 @@
 <?php
+ob_start(); // Start output buffering
+
 require_once('tcpdf/tcpdf.php');
 
 // Check if the paymentCode parameter is present in the URL
@@ -36,60 +38,163 @@ if (isset($_GET['paymentCode'])) {
         $itemListResult = mysqli_query($conn, $itemListQuery);
 
         // Retrieve bill details from the bill table based on the bill code
-        $billDetailsQuery = "SELECT totalAmount, paymentStatus, remaningAmount FROM bill WHERE billCode = '$billCode'";
+        $billDetailsQuery = "SELECT billDate, totalAmount, paymentStatus, remaningAmount FROM bill WHERE billCode = '$billCode'";
         $billDetailsResult = mysqli_query($conn, $billDetailsQuery);
         $billDetails = mysqli_fetch_assoc($billDetailsResult);
+
+        // Retrieve customer details from the customer table based on the customer code
+        $customerQuery = "SELECT customerName, address FROM customer WHERE customerCode = '$customerCode'";
+        $customerResult = mysqli_query($conn, $customerQuery);
+        $customerDetails = mysqli_fetch_assoc($customerResult);
 
         // Prepare the invoice content
         $invoiceContent = "
         <html>
         <head>
             <title>Invoice</title>
-            <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' rel='stylesheet'>
+            <html>
+            <head>
+                <title>Invoice</title>
+                <style>
+                body {
+                    font-family: 'Helvetica', sans-serif;
+                    font-size: 10px;
+                    color: #333;
+                    background-color: #f5f5f5;
+                }
+                .container {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    padding: 15px;
+                    background-color: #fff;
+                    border-radius: 5px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+                h1 {
+                    text-align: center;
+                    margin-bottom: 15px;
+                    color: #4a90e2;
+                    font-size: 28px;
+                }
+                h2 {
+                    font-size: 18px;
+                    margin-bottom: 5px;
+                    color: #333;
+                }
+                h3 {
+                    margin-top: 0;
+                    color: #666;
+                }
+                .invoice-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 15px;
+                }
+                .invoice-header i {
+                    max-width: 150px;
+                    height: auto;
+                }
+                .invoice-addresses {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 15px;
+                }
+                .invoice-address {
+                    width: 45%;
+                }
+                .invoice-details {
+                    margin-bottom: 15px;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 15px;
+                }
+                th,
+                td {
+                    padding: 6px;
+                    text-align: left;
+                    border-bottom: 1px solid #ddd;
+                }
+                th {
+                    font-weight: bold;
+                    background-color: #4a90e2;
+                    color: #fff;
+                }
+                .invoice-total {
+                    margin-top: 15px;
+                    text-align: right;
+                }
+                .invoice-footer {
+                    margin-top: 15px;
+                    text-align: center;
+                    color: #666;
+                }
+            </style>
         </head>
         <body>
             <div class='container'>
-                <h1 class='text-center'>Invoice</h1>
-                <table class='table table-bordered'>
-                    <tr>
-                        <th>Payment Code</th>
-                        <td>{$paymentCode}</td>
-                    </tr>
-                    <tr>
-                        <th>Bill Code</th>
-                        <td>{$billCode}</td>
-                    </tr>
-                    <tr>
-                        <th>Customer Code</th>
-                        <td>{$customerCode}</td>
-                    </tr>
-                    <tr>
-                        <th>Payment Date</th>
-                        <td>{$paymentDate}</td>
-                    </tr>
-                    <tr>
-                        <th>Payment Amount</th>
-                        <td>{$paymentAmount}</td>
-                    </tr>
-                    <tr>
-                        <th>Is Refund</th>
-                        <td>{$isRefund}</td>
-                    </tr>
-                    <tr>
-                        <th>Total Amount</th>
-                        <td>{$billDetails['totalAmount']}</td>
-                    </tr>
-                    <tr>
-                        <th>Payment Status</th>
-                        <td>{$billDetails['paymentStatus']}</td>
-                    </tr>
-                    <tr>
-                        <th>Remaining Amount</th>
-                        <td>{$billDetails['remaningAmount']}</td>
-                    </tr>
-                </table>
+                <h1>Invoice</h1>
+                <div class='invoice-header'>
+                    <i class='fas fa-dice-d20' style='font-size: 18px;'></i>
+                    <h2>Asian Engineers</h2>
+                </div>
+                <div class='invoice-addresses'>
+                    <div class='invoice-address'>
+                        <h3>Billing Address:</h3>
+                        <p>Asian Enginners</p>
+                        <p>Kandy,Sri Lanka</p>
+                    </div>
+                    <div class='invoice-address'>
+                        <h3>Customer Address:</h3>
+                        <p>{$customerDetails['customerName']}</p>
+                        <p>{$customerDetails['address']}</p>
+                    </div>
+                </div>
+                <div class='invoice-details'>
+                    <h3>Invoice Details:</h3>
+                    <table>
+                        <tr>
+                            <th>Payment Code</th>
+                            <td>{$paymentCode}</td>
+                            <th>Bill Date</th>
+                            <td>{$billDetails['billDate']}</td>
+                        </tr>
+                        <tr>
+                            <th>Bill Code</th>
+                            <td>{$billCode}</td>
+                            <th>Total Amount</th>
+                            <td>{$billDetails['totalAmount']}</td>
+                        </tr>
+                        <tr>
+                            <th>Customer Code</th>
+                            <td>{$customerCode}</td>
+                            <th>Payment Status</th>
+                            <td>{$billDetails['paymentStatus']}</td>
+                        </tr>
+                        <tr>
+                            <th>Payment Date</th>
+                            <td>{$paymentDate}</td>
+                            <th>Remaining Amount</th>
+                            <td>{$billDetails['remaningAmount']}</td>
+                        </tr>
+                        <tr>
+                            <th>Payment Amount</th>
+                            <td>{$paymentAmount}</td>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Is Refund</th>
+                            <td>{$isRefund}</td>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
                 <h2>Item List</h2>
-                <table class='table table-bordered'>
+                <table>
                     <thead>
                         <tr>
                             <th>Item Code</th>
@@ -113,55 +218,33 @@ if (isset($_GET['paymentCode'])) {
         $invoiceContent .= "
                     </tbody>
                 </table>
+                <div class='invoice-total'>
+                    <h3>Total Amount: {$billDetails['totalAmount']}</h3>
+                </div>
+                <div class='invoice-footer'>
+                    <p>Thank you for your business!</p>
+                </div>
             </div>
         </body>
         </html>";
 
-        // Create a new TCPDF instance
-        $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
-
-        // Set document information
-        $pdf->SetCreator('TCPDF');
-        $pdf->SetAuthor('Your Company');
+        // Generate PDF using TCPDF
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Asian Engineers');
         $pdf->SetTitle('Invoice');
-        $pdf->SetSubject('Invoice');
-
-        // Set default header data
-        $pdf->SetHeaderData('', 0, 'Invoice', '');
-
-        // Set default monospaced font
-        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-        // Set margins
-        $pdf->SetMargins(15, 15, 15);
-        $pdf->SetHeaderMargin(5);
-        $pdf->SetFooterMargin(10);
-
-        // Set auto page breaks
-        $pdf->SetAutoPageBreak(true, 10);
-
-        // Set image scale factor
-        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-        // Set font
-        $pdf->SetFont('helvetica', '', 12);
-
-        // Add a page
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
         $pdf->AddPage();
-
-        // Write the invoice content to the PDF
         $pdf->writeHTML($invoiceContent, true, false, true, false, '');
+        $pdf->Output('invoice.pdf', 'I');
 
-        // Output the PDF for download
-        $pdf->Output('Invoice.pdf', 'D');
-
+        // Close database connection
+        $conn->close();
     } else {
-        echo "Payment details not found.";
+        echo "No payment found for the provided payment code.";
     }
-
-    // Close the database connection
-    $conn->close();
 } else {
-    echo "Invalid paymentCode parameter.";
+    echo "No payment code provided.";
 }
 ?>

@@ -26,6 +26,7 @@ $sql = "SELECT * FROM payment LIMIT $rowsPerPage OFFSET $offset";
 $result = mysqli_query($conn, $sql);
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -234,7 +235,6 @@ $result = mysqli_query($conn, $sql);
                                             <td><strong>Customer Code</strong></td>
                                             <td><strong>Payment Date</strong></td>
                                             <td><strong>Payment Amount</strong></td>
-                                            <!-- <td><strong>Payment Method</strong></td> -->
                                             <td><strong>Is Refund</strong></td>
                                             <td><strong>Invoice</strong></td>
                                         </tr>

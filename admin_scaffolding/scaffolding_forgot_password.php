@@ -1,3 +1,36 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "login";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Escape user inputs for security
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+
+    // Check if the username exists in the login_details table
+    $usernameCheckSql = "SELECT * FROM login_details WHERE username = '$username'";
+    $usernameCheckResult = mysqli_query($conn, $usernameCheckSql);
+
+    if (mysqli_num_rows($usernameCheckResult) > 0) {
+        // Username exists, update the password
+        $updatePasswordSql = "UPDATE login_details SET password = '$password' WHERE username = '$username'";
+
+        if (mysqli_query($conn, $updatePasswordSql)) {
+            echo "Password changed successfully.";
+        } else {
+            echo "ERROR: Could not update the password: " . mysqli_error($conn);
+        }
+    } else {
+        echo "Username does not exist.";
+    }
+
+    mysqli_close($conn);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -1,3 +1,35 @@
+<?php 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "scaffolding";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_GET['billCode'])) {
+    $billCode = trim($_GET['billCode']);
+
+    $sql = "SELECT * FROM issued WHERE billCode = '$billCode' ";
+    $result = mysqli_query($conn, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        // Create an empty array to store the items
+        $items = array();
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            // Add each item to the array
+            $items[] = $row;
+        }
+
+        // You can now loop through the $items array to display the items
+       
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -153,14 +185,50 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>ZAA</td>
-                                            <td>scaffolding</td>
-                                            <td>Supplies</td>
-                                            <td>$4200</td>
-                                            <td>$5200</td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button" style="background: #3ab795;border-color: #3ab795;"><i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i></a></td>
-                                            <td><a class="btn btn-danger btn-circle ms-1" role="button"><i class="fas fa-trash text-white" style="font-size: 17px;"></i></a></td>
-                                        </tr>
+                                            <?php 
+                                             foreach ($items as $item) {
+                                                $itemCode = $item['itemCode'];
+                                                $billCode = $item['billCode'];
+                                                $itemName = $item['itemName'];
+                                                $quantity = $item['quantity'];
+                                                $price = $item['price'];
+                                                echo '
+                                                <td>'.$itemCode.'</td>
+                                                <td>'.$billCode.'</td>
+                                                <td>'.$itemName.'</td>
+                                                <td>'.$quantity.'</td>
+                                                <td>'.$price.'</td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-circle ms-1 edit-item-btn" data-item-code="'.$itemCode.'" data-bill-code="'.$billCode.'" role="button" href="#" style="background: #3ab795;border-color: #3ab795;">
+                                                        <i class="fas fa-pencil-alt text-white" style="font-size: 16px;"></i>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-circle ms-1 delete-item-btn" data-item-code="'.$itemCode.'" data-bill-code="'.$billCode.'">
+                                                        <i class="fas fa-trash text-white" style="font-size: 17px;"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>';
+                                    
+                                                // Display the item information here (e.g., echo statements, HTML structure)
+                                            }
+                                        } else {
+                                            // No items found with the specified billCode
+                                            $itemCode = 'No Data Found';
+                                            $billCode = 'No Data Found';
+                                            $itemName = 'No Data Found';
+                                            $quantity = 'No Data Found';
+                                            $price = 'No Data Found';
+                                        }
+                                    } else {
+                                        // No billCode parameter found in the URL, redirect to issued.php
+                                        header("Location: issued.php");
+                                        exit;
+                                    }
+                                    
+                                            
+                                            ?>
+                                      
                                     </tbody>
                                     <tfoot>
                                         <tr></tr>
