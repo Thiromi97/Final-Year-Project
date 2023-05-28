@@ -263,7 +263,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                             echo 'No items found in the inventory.';
                                         }
 
-
                                         // mysqli_close($connection);
                                         ?>
                                     </div>

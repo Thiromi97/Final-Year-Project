@@ -4,6 +4,9 @@ $username = "root";
 $password = "";
 $database = "scaffolding";
 
+$successMessage = '';
+$errorMessage = '';
+
 $conn = mysqli_connect($host, $username, $password, $database);
 // Check connection
 if (!$conn) {
@@ -70,14 +73,22 @@ $quantity = $row['quantity'];
                                 $result = mysqli_query($conn, $sql);
 
                                 if ($result) {
-                                    echo "Item updated successfully.";
+                                    $successMessage = "Item updated successfully.";
                                 } else {
-                                    echo "Error updating item: " . mysqli_error($conn);
+                                    $errorMessage= "Error updating item: " . mysqli_error($conn);
                                 }
                             }
                             ?>
                         </div>
                     </div>
+                    <?php
+        if (!empty($successMessage)) {
+                        echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                    }
+                    if (!empty($errorMessage)) {
+                        echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>

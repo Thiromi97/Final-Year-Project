@@ -1,4 +1,6 @@
 <?php
+$successMessage = '';
+$errorMessage = '';
  $itemCode = "";
  $itemName = "";
  $category = "";
@@ -100,10 +102,10 @@ if (isset($_GET['itemCode'])) {
                                 $sql = "DELETE FROM inventory WHERE itemCode = '$itemCode'";
 
                                 if ($conn->query($sql) === TRUE) {
-                                    echo "Record deleted successfully";
+                                    $successMessage= "Record deleted successfully";
                             
                                 } else {
-                                    echo "Error deleting record: " . $conn->error;
+                                    $errorMessage= "Error deleting record: " . $conn->error;
                                 }
 
                                 // Close the database connection
@@ -111,6 +113,14 @@ if (isset($_GET['itemCode'])) {
                             }
                             ?>
                         </div>
+                        <?php
+        if (!empty($successMessage)) {
+                        echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                    }
+                    if (!empty($errorMessage)) {
+                        echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                    }
+                    ?>
                     </div>
                 </div>
             </div>

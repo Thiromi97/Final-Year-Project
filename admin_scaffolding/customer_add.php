@@ -1,4 +1,7 @@
 <?php
+$successMessage = '';
+$errorMessage = '';
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -64,19 +67,19 @@ if (!$conn) {
                                     
                                     if (mysqli_num_rows($result) > 0) {
                                         // If the customer code already exists, show an error message
-                                        echo "ERROR: Customer with code $CustomerCode already exists.";
+                                        $errorMessage= "ERROR: Customer with code $CustomerCode already exists.";
                                     } else {
                                         // If the customer code doesn't exist, attempt insert query execution
                                         $sql = "INSERT INTO customer (customerCode, customerName, nic, address, contactNo, blackListed) VALUES ('$CustomerCode', '$CustomerName', '$Nic', '$Address', '$ContactNo', '$BlackListed')";
                                         
                                         if(mysqli_query($conn, $sql)){
-                                            echo "Records added successfully.";
+                                            $successMessage= "Records added successfully.";
                                         } else{
-                                            echo "ERROR: Could not execute $sql. " . mysqli_error($conn);
+                                            $errorMessage= "ERROR: Could not execute $sql. " . mysqli_error($conn);
                                         }
                                     }
                                 } else {
-                                    echo "ERROR: Customer code must start with 'C'.";
+                                    $errorMessage= "ERROR: Customer code must start with 'C'.";
                                 }
                                 
                                 mysqli_close($conn);
@@ -84,6 +87,14 @@ if (!$conn) {
                             ?>
                         </div>
                     </div>
+                    <?php
+        if (!empty($successMessage)) {
+                        echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                    }
+                    if (!empty($errorMessage)) {
+                        echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>

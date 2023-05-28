@@ -56,82 +56,97 @@ if (isset($_GET['paymentCode'])) {
             <head>
                 <title>Invoice</title>
                 <style>
-                body {
-                    font-family: 'Helvetica', sans-serif;
-                    font-size: 10px;
-                    color: #333;
-                    background-color: #f5f5f5;
-                }
-                .container {
-                    max-width: 800px;
-                    margin: 0 auto;
-                    padding: 15px;
-                    background-color: #fff;
-                    border-radius: 5px;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                }
-                h1 {
-                    text-align: center;
-                    margin-bottom: 15px;
-                    color: #4a90e2;
-                    font-size: 28px;
-                }
-                h2 {
-                    font-size: 18px;
-                    margin-bottom: 5px;
-                    color: #333;
-                }
-                h3 {
-                    margin-top: 0;
-                    color: #666;
-                }
-                .invoice-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 15px;
-                }
-                .invoice-header i {
-                    max-width: 150px;
-                    height: auto;
-                }
-                .invoice-addresses {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 15px;
-                }
-                .invoice-address {
-                    width: 45%;
-                }
-                .invoice-details {
-                    margin-bottom: 15px;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 15px;
-                }
-                th,
-                td {
-                    padding: 6px;
-                    text-align: left;
-                    border-bottom: 1px solid #ddd;
-                }
-                th {
-                    font-weight: bold;
-                    background-color: #4a90e2;
-                    color: #fff;
-                }
-                .invoice-total {
-                    margin-top: 15px;
-                    text-align: right;
-                }
-                .invoice-footer {
-                    margin-top: 15px;
-                    text-align: center;
-                    color: #666;
-                }
-            </style>
+    body {
+        font-family: 'Helvetica', sans-serif;
+        font-size: 8px;
+        color: #333;
+        background-color: #f5f5f5;
+    }
+
+    .container {
+        max-width: 400px; /* Adjust the width as needed */
+        margin: 0 auto;
+        padding: 15px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #4a90e2;
+        font-size: 14px; /* Increase the font size if needed */
+    }
+
+    h2 {
+        font-size: 12px; /* Increase the font size if needed */
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    h3 {
+        margin-top: 0;
+        color: #666;
+    }
+
+    .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .invoice-header i {
+        max-width: 150px;
+        height: auto;
+    }
+
+    .invoice-addresses {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .invoice-address {
+        width: 45%;
+    }
+
+    .invoice-details {
+        margin-bottom: 15px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 15px;
+    }
+
+    th,
+    td {
+        padding: 6px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        font-weight: bold;
+        background-color: #4a90e2;
+        color: #fff;
+    }
+
+    .invoice-total {
+        margin-top: 15px;
+        text-align: right;
+    }
+
+    .invoice-footer {
+        margin-top: 15px;
+        text-align: center;
+        color: #666;
+    }
+</style>
+
         </head>
         <body>
             <div class='container'>

@@ -40,7 +40,7 @@
                                 </div>
                             </form>
                             <div class="text-center"><a class="small" href="forgot-password.html" style="color: #4c5c64;">Forgot Password?</a></div>
-                            <div class="text-center"><a class="small" href="scaffolding_login.php" style="color: #4c5c64;">Already have an account? Login!</a></div>
+                            <div class="text-center"><a class="small" href="login.php" style="color: #4c5c64;">Already have an account? Login!</a></div>
                         </div>
                     </div>
                 </div>

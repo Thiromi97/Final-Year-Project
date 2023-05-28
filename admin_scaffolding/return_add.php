@@ -4,6 +4,9 @@ $username = "root";
 $password = "";
 $dbname = "scaffolding";
 
+$successMessage = '';
+$errorMessage = '';
+
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
@@ -33,7 +36,7 @@ if (!$conn) {
                             <h2 class="text-center mb-4">New Return</h2>
                             <form method="post" action="">
                                 <div class="mb-3"><label class="form-label">Bill Code</label><input class="form-control" type="text" id="name-2" name="billCode" placeholder="Bill Code(BXXX foramt)" minlength="4" maxlength="4" required=""></div>
-                                <div class="mb-3"><label class="form-label">Item Code</label><input class="form-control" type="text" id="name-3" name="itemCode" maxlength="200" required="Item Code(ZXX format)" placeholder="ItemCode" required=""></div>
+                                <div class="mb-3"><label class="form-label">Item Code</label><input class="form-control" type="text" id="name-3" name="itemCode" maxlength="3" required="Item Code(ZXX format)" placeholder="ItemCode" required=""></div>
                                 <div class="mb-3"><label class="form-label">Return Quantity</label><input class="form-control" type="number" name="returnQuantity"  placeholder="Return Quantity" required=""></div>
                                 <!-- <div class="mb-3"><label class="form-label">Total Price</label><input class="form-control" type="number" name="totalPrice"  placeholder="Total Price" required=""></div> -->
                                 <div class="mb-3"><label class="form-label">Return Date</label><input class="form-control" type="date" name="returnDate"  required="" placeholder="Return Date" required=""></div>
@@ -68,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                       VALUES ('$BillCode', '$ItemCode', '$ReturnQuantity', '$TotalPrice', '$ReturnDate')";
 
                 if (mysqli_query($conn, $insertReturnedSql)) {
-                    echo "Record added successfully to the returned table.";
+                    $successMessage= "Record added successfully to the returned table.";
 
                     // Get the last inserted returnId
                     $returnId = mysqli_insert_id($conn);
@@ -78,21 +81,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         VALUES ('$returnId', '$BillCode', '$customerCode', '$ReturnDate', '$TotalPrice')";
 
                     if (mysqli_query($conn, $insertRefundSql)) {
-                        echo "Record added successfully to the refund table.";
+                        $successMessage= "Record added successfully to the refund table and return table.";
                     } else {
-                        echo "ERROR: Could not execute the INSERT query for refund table: " . mysqli_error($conn);
+                        $errorMessage="ERROR: Could not execute the INSERT query for refund table: " . mysqli_error($conn);
                     }
                 } else {
-                    echo "ERROR: Could not execute the INSERT query for returned table: " . mysqli_error($conn);
+                    $errorMessage= "ERROR: Could not execute the INSERT query for returned table: " . mysqli_error($conn);
                 }
             } else {
-                echo "ERROR: Return quantity cannot exceed the issued quantity.";
+                $errorMessage= "ERROR: Return quantity cannot exceed the issued quantity.";
             }
         } else {
-            echo "ERROR: No record found with the specified billCode and itemCode in the issued table.";
+            $errorMessage= "ERROR: No record found with the specified billCode and itemCode in the issued table.";
         }
     } else {
-        echo "ERROR: Bill code must start with 'B' and item code must start with 'Z'.";
+        $errorMessage= "ERROR: Bill code must start with 'B' and item code must start with 'Z'.";
     }
 
     mysqli_close($conn);
@@ -104,6 +107,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         </div>
                     </div>
+                    <?php
+        if (!empty($successMessage)) {
+                        echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                    }
+                    if (!empty($errorMessage)) {
+                        echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>

@@ -5,6 +5,8 @@ $password = "";
 $dbname = "login";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+$message = ""; // Variable to store the success or error message
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Escape user inputs for security
     $username = mysqli_real_escape_string($conn, $_POST['username']);
@@ -19,18 +21,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $updatePasswordSql = "UPDATE login_details SET password = '$password' WHERE username = '$username'";
 
         if (mysqli_query($conn, $updatePasswordSql)) {
-            echo "Password changed successfully.";
+            $message = "Password changed successfully.";
         } else {
-            echo "ERROR: Could not update the password: " . mysqli_error($conn);
+            $message = "ERROR: Could not update the password: " . mysqli_error($conn);
         }
     } else {
-        echo "Username does not exist.";
+        $message = "Username does not exist.";
     }
 
     mysqli_close($conn);
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,12 +58,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4" style="margin-bottom: 40px;">Change Password</h4>
                                     </div>
-                                    <form class="user" style="height: 298.6px;">
-                                        <div class="mb-3"><input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="Username" name="username" required="" style="margin-bottom: 20px;margin-top: 71px;font-size: 15px;"></div>
-                                        <div class="mb-3"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="New Password" name="password" style="margin-bottom: 20px;font-size: 15px;"></div><button class="btn btn-primary d-block btn-user w-100" type="submit" style="background: #2d2e34;margin-bottom: 60px;font-size: 15px;">Change Password</button>
+                                    <form class="user" action="" method="POST" style="height: 298.6px;">
+                                        <div class="mb-3">
+                                            <input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="Username" name="username" required="" style="margin-bottom: 20px;margin-top: 71px;font-size: 15px;">
+                                        </div>
+                                        <div class="mb-3">
+                                            <input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="New Password" name="password" style="margin-bottom: 20px;font-size: 15px;">
+                                        </div>
+                                        <button class="btn btn-primary d-block btn-user w-100" type="submit" name="submit" style="background: #2d2e34;margin-bottom: 60px;font-size: 15px;">Change Password</button>
+
+                                        <?php if (!empty($message)): ?>
+                                            <div class="text-center"><?php echo $message; ?></div>
+                                        <?php endif; ?>
+
                                         <hr>
-                                        <div style="text-align: center;"><a class="small" href="forgot-password.html" style="font-size: 15px;color: #2d2e34;">Already have an account?</a></div>
-                                        <div style="text-align: center;"><a class="small" href="register.html" style="font-size: 15px;color: #2d2e34;">Create an Account!</a></div>
+                                        <div style="text-align: center;"><a class="small" href="scaffolding_login.php" style="font-size: 15px;color: #2d2e34;">Already have an account?</a></div>
+                                        <div style="text-align: center;"><a class="small" href="scaffolding_account.php" style="font-size: 15px;color: #2d2e34;">Create an Account!</a></div>
                                     </form>
                                     <div class="text-center"></div>
                                     <div class="text-center" style="padding-bottom: 0px;"></div>

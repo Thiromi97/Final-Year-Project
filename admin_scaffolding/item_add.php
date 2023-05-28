@@ -4,6 +4,9 @@ $username = "root";
 $password = "";
 $dbname = "scaffolding";
 
+$successMessage = '';
+$errorMessage = '';
+
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
@@ -61,18 +64,18 @@ if (!$conn) {
                                     $result = mysqli_query($conn, $sql);
                                     
                                     if (mysqli_num_rows($result) > 0) {
-                                        echo "ERROR: Item with code $ItemCode already exists.";
+                                        $errorMessage="ERROR: Item with code $ItemCode already exists.";
                                     } else {
                                         $sql = "INSERT INTO inventory (itemCode, itemName,category,purchasePrice,marketPrice,quantity) VALUES ('$ItemCode', '$ItemName', '$Category', '$PurchasePrice', '$MarketPrice', '$Quantity')";
                                         
                                         if(mysqli_query($conn, $sql)){
-                                            echo "Records added successfully.";
+                                            $successMessage= "Records added successfully.";
                                         } else{
-                                            echo "ERROR: Could not execute $sql. " . mysqli_error($conn);
+                                            $errorMessage= "ERROR: Could not execute $sql. " . mysqli_error($conn);
                                         }
                                     }
                                 } else {
-                                    echo "ERROR: Item code must start with 'Z'.";
+                                    $errorMessage= "ERROR: Item code must start with 'Z'.";
                                 }
                                 
                                 mysqli_close($conn);
@@ -80,6 +83,14 @@ if (!$conn) {
                             ?>
                         </div>
                     </div>
+                    <?php
+        if (!empty($successMessage)) {
+                        echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                    }
+                    if (!empty($errorMessage)) {
+                        echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>

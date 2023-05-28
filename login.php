@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$errorMessage = '';
+
 // Database credentials
 $servername = "localhost";
 $username = "root";
@@ -48,7 +50,7 @@ if (isset($_POST['submit'])) {
             exit();
         }
     } else {
-        echo "Invalid username or password";
+        $errorMessage="Invalid username or password";
     }
 }
 ?>
@@ -94,6 +96,11 @@ if (isset($_POST['submit'])) {
                                     </div>
                                         <div style="text-align: center;"><a class="small" href="account.php" style="font-size: 15px;color: #782c25;">Create an Account!</a></div>
                                     </form>
+                                    <?php
+                    if (!empty($errorMessage)) {
+                        echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                    }
+                    ?>
                                     <div class="text-center"></div>
                                     <div class="text-center" style="padding-bottom: 0px;"></div>
                                 </div>

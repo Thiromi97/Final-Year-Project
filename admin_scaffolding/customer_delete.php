@@ -1,4 +1,7 @@
 <?php
+$successMessage = '';
+$errorMessage = '';
+
 $customerCode = "";
 $customerName = "";
 $nic = "";
@@ -103,10 +106,10 @@ if (isset($_GET['customerCode'])) {
                                 $sql = "UPDATE customer SET blackListed = '$blackListed' WHERE customerCode = '$customerCode'";
 
                                 if ($conn->query($sql) === TRUE) {
-                                    echo "Record black listed successfully";
+                                    $successMessage="Record black listed successfully";
                             
                                 } else {
-                                    echo "Error blacklisting the record: " . $conn->error;
+                                    $errorMessage="Error blacklisting the record: " . $conn->error;
                                 }
 
                                 // Close the database connection
@@ -115,6 +118,14 @@ if (isset($_GET['customerCode'])) {
                             ?>
                         </div>
                     </div>
+                    <?php
+        if (!empty($successMessage)) {
+                        echo '<div class="alert alert-success">' . $successMessage . '</div>';
+                    }
+                    if (!empty($errorMessage)) {
+                        echo '<div class="alert alert-danger">' . $errorMessage . '</div>';
+                    }
+                    ?>
                 </div>
             </div>
         </div>
