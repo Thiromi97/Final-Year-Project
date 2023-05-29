@@ -5,36 +5,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Profile - Brand</title>
-    <link rel="stylesheet" href="assets/bootstrap1.min.css">
+    <link rel="stylesheet" href="assets/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <script src="https://kit.fontawesome.com/961768b1ec.js" crossorigin="anonymous"></script>
 </head>
-
-<body id="page-top">
+<body id="page-top" style="--bs-primary: #574476;--bs-primary-rgb: 87,68,118;--bs-success: #1dc9b7;--bs-success-rgb: 29,201,183;--bs-danger: #FF0000;--bs-danger-rgb: 255,0,0;--bs-warning: #fd3995;--bs-warning-rgb: 253,57,149;--bs-secondary: #808080;--bs-info: #39a1f4;--bs-info-rgb: 57,161,244;--bs-light: #F5F5F5;--bs-light-rgb: 245,245,245;--bs-dark: #2E2E2E;--bs-dark-rgb: 46,46,46;--bs-secondary-rgb: 128,128,128;">
     <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: #2D3F50;">
+        <nav class="navbar navbar-dark bg-primary align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0" style="background: #0000ff;">
             <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
-                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-dice-d20" style="font-size: 23px;"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>asian enginners</span></div>
+                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-dice-d20" style="font-size: 21px;"></i></div>
+                    <div class="sidebar-brand-text mx-3"><span>ASian Enginners</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link" href="admin_scaffolding.php"><i class="fas fa-bars"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link active" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a>
-                    <li class="nav-item"><a class="nav-link" href="inventory.php"><i class="fas fa-cubes"></i><span>Inventory</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="customer.php"><i class="fas fa-user-friends" style="font-size: 13px;"></i><span>Customer</span></a>
-                    <li class="nav-item"><a class="nav-link" href="issued.php"><i class="fas fa-box-open" style="font-size: 13px;"></i><span>Issued</span></a>
-                    <li class="nav-item"><a class="nav-link" href="return.php"><i class="fas fa-archive"></i><span>Return</span></a>
-                    <li class="nav-item"><a class="nav-link" href="bill.php"><i class="fas fa-table" style="font-size: 15px;"></i><span>Bill</span></a>
-                    <li class="nav-item"><a class="nav-link" href="bill_add.php"><i class="fas fa-newspaper" style="font-size: 16px;"></i><span>Add Bill</span></a>
-                    <li class="nav-item"><a class="nav-link" href="payment.php"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a>
-                    <li class="nav-item"><a class="nav-link" href="refund.php"><i class="fas fa-file-invoice" style="font-size: 16px;"></i><span>Refund</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="scaffolding_login.php"><i class="fas fa-sign-in-alt"></i><span>LogOut</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="settings.php"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="admin_dashboard.php"><i class="fas fa-bars" style="font-size: 14px;"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile_admin.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="admin_scaffolding/admin_scaffolding.php"><i class="fas fa-table"></i><span>Scaffolding</span></a>
+                    <!-- <a class="nav-link" href="table.html"><i class="fas fa-th" style="font-size: 13px;"></i><span>Reinforcement</span></a>
+                    <a class="nav-link" href="table.html"><i class="fas fa-th-large"></i><span>Reinforcement Estimate</span></a></li> -->
+                    <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-out-alt" style="font-size: 14px;"></i><span>LogOut</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="settings.php"><i class="fas fa-cog"></i><span>&nbsp;Settings</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
         </nav>
+
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
@@ -250,9 +245,9 @@
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-    <script src="assets/bootstrap1.min.js"></script>
-    <script src="assets/bs-init1.js"></script>
-    <script src="assets/theme1.js"></script>
+    <script src="assets/bootstrap.min.js"></script>
+    <script src="assets/bs-init.js"></script>
+    <script src="assets/theme.js"></script>
 </body>
 
 </html>

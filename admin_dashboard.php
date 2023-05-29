@@ -19,7 +19,7 @@
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" href="admin_dashboard.php"><i class="fas fa-bars" style="font-size: 14px;"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile_admin.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="admin_scaffolding/admin_scaffolding.php"><i class="fas fa-table"></i><span>Scaffolding</span></a>
                     <!-- <a class="nav-link" href="table.html"><i class="fas fa-th" style="font-size: 13px;"></i><span>Reinforcement</span></a>
                     <a class="nav-link" href="table.html"><i class="fas fa-th-large"></i><span>Reinforcement Estimate</span></a></li> -->
