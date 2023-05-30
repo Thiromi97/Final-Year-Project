@@ -22,7 +22,9 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link active" href="employee_dashboard.php"><i class="fas fa-bars" style="font-size: 14px;"></i><span>Dashboard</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="profile.php"><i class="fas fa-user"></i><span>Profile</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-table"></i><span>Scaffolding</span></a><a class="nav-link" href="table.html"><i class="fas fa-th" style="font-size: 13px;"></i><span>Reinforcement</span></a><a class="nav-link" href="table.html"><i class="fas fa-th-large"></i><span>Reinforcement Estimate</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="employee_scaffolding/employee_scaffolding.php"><i class="fas fa-table"></i><span>Scaffolding</span></a>
+                    <li class="nav-item"><a class="nav-link" href="table.html"><i class="fas fa-th" style="font-size: 13px;"></i><span>Reinforcement</span></a>
+                    <li class="nav-item"><a class="nav-link" href="table.html"><i class="fas fa-th-large"></i><span>Reinforcement Estimate</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="login.php"><i class="fas fa-sign-out-alt" style="font-size: 14px;"></i><span>LogOut</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="account.php"><i class="fas fa-cog"></i><span>&nbsp;Settings</span></a></li>
                 </ul>

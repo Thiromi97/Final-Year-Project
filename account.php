@@ -15,7 +15,7 @@
             <div class="card-body p-0">
                 <div class="row">
                     <div class="col-lg-5 d-none d-lg-flex">
-                        <div class="flex-grow-1 bg-register-image" style="background: url(&quot;assets/img/dogs/TH97_constructionequipmentsupply_companyscaffolding.reinforceme_1a7bd21f-4362-4576-9545-2e4257d33859.png&quot;) center / cover no-repeat;"></div>
+                        <div class="flex-grow-1 bg-register-image" style="background: url(&quot;assets/img/dogs/slabs.png&quot;) center / cover no-repeat;"></div>
                     </div>
                     <div class="col-lg-7">
                         <div class="p-5">
