@@ -1,8 +1,10 @@
 <?php
+session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "scaffolding";
+$database = "login";
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
@@ -24,6 +26,14 @@ $offset = ($page - 1) * $rowsPerPage;
 
 $sql = "SELECT * FROM inventory LIMIT $rowsPerPage OFFSET $offset";
 $result = mysqli_query($conn, $sql);
+
+$connection = mysqli_connect($servername, $username, $password, $database);
+$employee_name = $_SESSION['username'];
+$table_name = 'inventory';
+
+$permissions_query = "SELECT * FROM employee_permission WHERE employee_name = '$employee_name' AND table_name = '$table_name'";
+$permissions_result = mysqli_query($connection, $permissions_query);
+$permissions = mysqli_fetch_assoc($permissions_result);
 
 ?>
 
@@ -60,7 +70,7 @@ $result = mysqli_query($conn, $sql);
                     <li class="nav-item"><a class="nav-link" href="payment.php"><i class="fas fa-sticky-note" style="font-size: 13px;"></i><span>Payment</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="refund.php"><i class="fas fa-file-invoice" style="font-size: 16px;"></i><span>Refund</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="scaffolding_login.php"><i class="fas fa-sign-in-alt"></i><span>LogOut</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="settings.php"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="settings.php"><i class="fas fa-cog"></i><span>Settings</span></a></li> -->
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
@@ -203,7 +213,17 @@ $result = mysqli_query($conn, $sql);
                                             <th>Market Price</th>
                                             <th>Quantity</th>
                                             <th></th>
-                                            <th><a id="add-item-btn" class="btn btn-primary btn-circle ms-1" role="button" href="item_add.php"><i class="fas fa-plus text-white" style="font-size: 17pbx;"></i></a></th>
+                                            <th>
+                                            <?php
+                                            if (!is_null($permissions) && is_array($permissions)) {
+                                                if (trim($permissions['can_edit']) === 'Yes') {
+                                                    echo '<a id="add-item-btn" class="btn btn-primary btn-circle ms-1" role="button" href="customer_add.php"><i class="fas fa-plus text-white" style="font-size: 17pbx;"></i></a>';
+                                                } else {
+                                                    echo '<a id="add-item-btn" class="btn btn-primary btn-circle ms-1" role="button" href="customer_add.php" style="background: #ccc; border-color: #ccc;" disabled><i class="fas fa-plus" style="color: #888; font-size: 17px;"></i></a>';
+                                                }
+                                            }
+                                            ?>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -214,19 +234,34 @@ $result = mysqli_query($conn, $sql);
                                                     <td>" . $row["category"] . "</td>
                                                     <td>" . $row["purchasePrice"] . "</td>
                                                     <td>" . $row["marketPrice"] . "</td>
-                                                    <td>" . $row["quantity"] . "</td>
-                                                    <td>
-                                                    <button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code='" . $row["itemCode"] . "' role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
-                                            <i class='fas fa-pencil-alt text-white' style='font-size: 16px;'></i>
-                                        </button>
-                                    </td>
-                                    <td>
-                                    <button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["itemCode"] . "'>
-                                        <i class='fas fa-trash text-white' style='font-size: 17px;'></i>
-                                    </button>
-                                    </td>
-                                                </tr>";
-                                        } ?>
+                                                    <td>" . $row["quantity"] . "</td>";
+                                                    if (!is_null($permissions) && is_array($permissions)) {
+                                                        // Edit button
+                                                        if (trim($permissions['can_edit']) === 'Yes') {
+                                                            echo "<td><button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code='" . $row["itemCode"] . "' role='button' href='#' style='background: #3ab795;border-color: #3ab795;'>
+                                                            <i class='fas fa-pencil-alt text-white'></i>
+                                                        </button></td>";
+                                                        } else {
+                                                            echo "<td><button class='btn btn-danger btn-circle ms-1 edit-item-btn' data-item-code='" . $row["itemCode"] . "' role='button' href='#' style='background: #ccc; border-color: #ccc;' disabled>
+                                                            <i class='fas fa-pencil-alt' style='color: #888;'></i>
+                                                        </button></td>";
+                                                        }
+                
+                                                        // Delete button
+                                                        if (trim($permissions['can_delete'] )=== 'Yes') {
+                                                            echo "<td><button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["itemCode"] . "'>
+                                                            <i class='fas fa-trash text-white'></i>
+                                                        </button></td>";
+                                                        } else {
+                                                            echo "<td><button class='btn btn-danger btn-circle ms-1 delete-item-btn' data-item-code='" . $row["itemCode"] . "' style='background: #ccc; border-color: #ccc;' disabled>
+                                                            <i class='fas fa-trash' style='color: #888;'></i>
+                                                        </button></td>";
+                                                        }
+                                                    }
+                
+                                                    echo "</tr>";
+                                                } ?>
+          
                                     </tbody>
                                     <tfoot>
                                         <tr>

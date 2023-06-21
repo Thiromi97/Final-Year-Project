@@ -173,6 +173,7 @@ $result = mysqli_query($conn, $sql);
                                     <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                                         <label class="form-label">Show&nbsp;
                                             <select class="d-inline-block form-select form-select-sm" onchange="location.href = '?rowsPerPage=' + this.value;">
+                                                <option value="5" <?php if ($rowsPerPage == 5) echo "selected"; ?>>5</option>
                                                 <option value="10" <?php if ($rowsPerPage == 10) echo "selected"; ?>>10</option>
                                                 <option value="25" <?php if ($rowsPerPage == 25) echo "selected"; ?>>25</option>
                                                 <option value="50" <?php if ($rowsPerPage == 50) echo "selected"; ?>>50</option>
