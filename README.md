@@ -10,10 +10,8 @@ Hi there! I'm [Thiromi](https://www.linkedin.com/in/thiromi-dasanayaka-307441250
 🔗 **LinkedIn**: [https://www.linkedin.com/in/thiromi-dasanayaka-307441250/](https://www.linkedin.com/in/thiromi-dasanayaka-307441250/)
 
 
-# ConstructEquip - Your Ultimate Construction Equipment Management System! 🏗️💼
-
-![Project Logo](/path/to/project-logo.png)
-
+# ConstructEquip - Your Ultimate Construction Equipment Management System!🏗️
+  <img src="https://github.com/Thiromi97/Final-Year-Project/blob/New-Update/Constructequip.png?raw=true" width="200" height="200" alt="Project Logo" style="border-radius: 50%;">
 ## 📜 Introduction
 Welcome to ConstructEquip, the powerful and efficient Construction Equipment Management System built with passion and dedication! 🚀 This individual project is designed to revolutionize how you manage construction equipment, ensuring smooth operations and maximizing productivity! Let's embark on this exciting journey together! 🌟
 
