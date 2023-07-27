@@ -1,3 +1,15 @@
+<p align="center">
+  <img src="https://github.com/Thiromi97/ebay_automation/blob/main/my%20banner.png?raw=true" alt="Your Awesome Banner" width="600" height="300">
+</p>
+
+## About Me 👩‍💻
+
+Hi there! I'm [Thiromi](https://www.linkedin.com/in/thiromi-dasanayaka-307441250/) 👋, a passionate IT student and Testing Enchantor 🧙‍♂️. I love diving into the vast ocean of knowledge, searching for new skills to master, and finding the best match for me 🌊🔍. If you're as excited about automation as I am, let's connect and work some magic together! ✨
+
+📧 **Email**: dasanayakathiromi@gmail.com 💌
+🔗 **LinkedIn**: [https://www.linkedin.com/in/thiromi-dasanayaka-307441250/](https://www.linkedin.com/in/thiromi-dasanayaka-307441250/)
+
+
 # ConstructEquip - Your Ultimate Construction Equipment Management System! 🏗️💼
 
 ![Project Logo](/path/to/project-logo.png)
