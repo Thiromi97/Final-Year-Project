@@ -42,10 +42,10 @@ Built with cutting-edge technologies to deliver a seamless user experience:
 
 ## 🔧 Installation
 Get started with ConstructEquip in a few simple steps:
-1. Clone this repository to your local machine: `git clone https://github.com/your-username/constructEquip.git` 🛠️
+1. Clone this repository to your local machine: `https://github.com/Thiromi97/Final-Year-Project.git` 🛠️
 2. Set up a local web server environment like XAMPP. 🌐
-3. Import the database schema from `/database/schema.sql`. 🏰
-4. Configure the database connection in `/config/database.php`. 🔧
+3. Import the database schema from `https://drive.google.com/drive/folders/1ESQqPv9bi2ZeTxsfMHyU-AZ7-wW3GIa2`. 🏰
+4. Configure the database connection 🔧
 5. Launch ConstructEquip and take control of your construction equipment management! 🚀
 
 ## 💼 Usage
